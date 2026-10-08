@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="Astride.Core/Astride.Core.csproj" />
+  <Project Path="Astride.Desktop/Astride.Desktop.csproj" />
+  <Project Path="Astride.Input/Astride.Input.csproj" />
+</Solution>
