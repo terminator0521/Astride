@@ -1,14 +1,23 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <OutputType>Exe</OutputType>
-    <TargetFramework>net10.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-  </PropertyGroup>
+	<PropertyGroup>
+		<OutputType>Exe</OutputType>
+		<TargetFramework>net10.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<!-- Default to a Console app during Debug mode so you can see logs -->
+		<OutputType Condition="'$(Configuration)' == 'Debug'">Exe</OutputType>
+		<!-- Change to WinExe in Release mode to hide the black console window -->
+		<OutputType Condition="'$(Configuration)' == 'Release'">WinExe</OutputType>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Astride.Core\Astride.Core.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Raylib-cs" Version="8.1.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\Astride.Core\Astride.Core.csproj" />
+		<ProjectReference Include="..\Astride.Raygui\Raygui-cs.csproj" />
+	</ItemGroup>
 
 </Project>

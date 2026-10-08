@@ -7,7 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Raylib-cs" Version="8.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Astride.Input\Astride.Input.csproj" />
+    <ProjectReference Include="..\Astride.Raygui\Raygui-cs.csproj" />
   </ItemGroup>
 
 </Project>
