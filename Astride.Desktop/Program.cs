@@ -1,7 +1,6 @@
 ﻿using Astride.Core;
-using raygui_cs;
-using Raylib_cs;
 using System.Numerics;
+using ZeroElectric.Vinculum;
 
 Raylib.InitWindow(1280, 720, "Astride");
 var game = new Game(720, 720);
@@ -11,28 +10,27 @@ while (!Raylib.WindowShouldClose())
 {
     //render game texture
     Raylib.BeginTextureMode(game.renderTexture);
-    Raylib.ClearBackground(Color.Blank);
+    Raylib.ClearBackground(Raylib.BLANK);
     game.Render();
     Raylib.EndTextureMode();
 
     //main game updates
     game.Update();
     Raylib.BeginDrawing();
-    Raylib.ClearBackground(Color.White);
+    Raylib.ClearBackground(Raylib.WHITE);
 #if DEBUG
     //Raylib.DrawLine((int)game.dest.X + (int)game.dest.Width, (int)game.dest.Y, (int)game.dest.X + (int)game.dest.Width, (int)game.dest.Y + (int)game.dest.Height, Color.Black);
 
-    Raygui.GuiSetStyle((int)GuiControl.DEFAULT, (int)GuiDefaultProperty.TEXT_SIZE, 20);
-    Raygui.GuiDrawText("FPS: " + Raylib.GetFPS(), new Rectangle(10, 10, 100, 30), 30, Color.Black);
-    Raygui.GuiDrawText("MousePos: " + Raylib.GetMousePosition(), new Rectangle(10, 40, 300, 30), 30, Color.Black);
+    Raylib.DrawText("FPS: " + Raylib.GetFPS(), 10, 10, 30, Raylib.BLACK);
+    Raylib.DrawText("MousePos: " + Raylib.GetMousePosition(), 10, 50, 30, Raylib.BLACK);
 #endif
     //draw game render texture to screen
-    Raylib.DrawTexturePro(game.renderTexture.Texture, game.src, game.dest, Vector2.Zero, 0, Color.White);
+    Raylib.DrawTexturePro(game.renderTexture.texture, game.src, game.dest, Vector2.Zero, 0, Raylib.WHITE);
 
     //raygui updates
     game.UI();
     Raylib.EndDrawing();
 
     //reset gui
-    Raygui.GuiLoadStyleDefault();
+    RayGui.GuiLoadStyleDefault();
 }

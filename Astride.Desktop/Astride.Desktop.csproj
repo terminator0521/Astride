@@ -8,16 +8,17 @@
 		<!-- Default to a Console app during Debug mode so you can see logs -->
 		<OutputType Condition="'$(Configuration)' == 'Debug'">Exe</OutputType>
 		<!-- Change to WinExe in Release mode to hide the black console window -->
+		<AllowUnsafeBlocks>enable</AllowUnsafeBlocks>
 		<OutputType Condition="'$(Configuration)' == 'Release'">WinExe</OutputType>
+		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Raylib-cs" Version="8.1.0" />
+		<PackageReference Include="Raylib-CSharp-Vinculum" Version="5.0.1" />
 	</ItemGroup>
 
 	<ItemGroup>
 		<ProjectReference Include="..\Astride.Core\Astride.Core.csproj" />
-		<ProjectReference Include="..\Astride.Raygui\Raygui-cs.csproj" />
 	</ItemGroup>
 
 </Project>

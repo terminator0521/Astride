@@ -1,17 +1,16 @@
-﻿using Raylib_cs;
-using raygui_cs;
+﻿using Astride.Core.Scenes;
 using System.Numerics;
-using Astride.Core.Scenes;
+using ZeroElectric.Vinculum;
 
 namespace Astride.Core
 {
     public class Game
     {
-        private Scene scene;
+        private Scene _scene;
 
         public Rectangle src;
         public Rectangle dest;
-        public RenderTexture2D renderTexture;
+        public RenderTexture renderTexture;
 
         public Vector2 origin;
         public Game(int width, int height)
@@ -20,28 +19,28 @@ namespace Astride.Core
             origin = new Vector2(width / 2, height / 2);
             src = new Rectangle(0, 0, width, -height);
             dest = new Rectangle(0, 0, width, height);
-            scene = new MainMenuScene();
+            _scene = new MainMenuScene();
         }
 
         public void Update()
         {
-            scene.Update();
+            _scene.Update();
         }
         public void Render()
         {
-            scene.Render();
+            _scene.Render();
         }
 
         public void UI()
         {
-            scene.UI();
+            _scene.UI();
         }
 
         public void getNextScene()
         {
-            if (scene.SetNextScene() is not null)
+            if (_scene.SetNextScene() is not null)
             {
-                scene = scene.SetNextScene();
+                _scene = _scene.SetNextScene();
             }
         }
 

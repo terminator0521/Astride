@@ -2,5 +2,4 @@
   <Project Path="Astride.Core/Astride.Core.csproj" />
   <Project Path="Astride.Desktop/Astride.Desktop.csproj" />
   <Project Path="Astride.Input/Astride.Input.csproj" />
-  <Project Path="Astride.Raygui/Raygui-cs.csproj" />
 </Solution>

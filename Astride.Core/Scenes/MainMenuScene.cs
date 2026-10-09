@@ -1,17 +1,13 @@
-﻿using Astride.Input;
-using raygui_cs;
-using Raylib_cs;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using ZeroElectric.Vinculum;
 
 namespace Astride.Core.Scenes
 {
     internal class MainMenuScene : Scene
     {
+        private int _scene;
         public override void Update()
         {
-            
+
         }
         public override void Render()
         {
@@ -19,8 +15,18 @@ namespace Astride.Core.Scenes
         }
         public override void UI()
         {
-            Raygui.GuiSetStyle((int)GuiControl.DEFAULT, (int)GuiDefaultProperty.TEXT_SIZE, 32);
-            Raygui.GuiDrawText("Main Menu", new Rectangle(490, 10, 300, 32), 1, Color.Black);
+            RayGui.GuiSetStyle((int)GuiControl.DEFAULT, (int)GuiDefaultProperty.TEXT_SIZE, 64);
+            RayGui.GuiLabel(new Rectangle(540, 20, 300, 64), "Astride");
+
+            RayGui.GuiSetStyle((int)GuiControl.DEFAULT, (int)GuiDefaultProperty.TEXT_SIZE, 40);
+            if (RayGui.GuiButton(new(340, 140, 600, 100), "Freeplay") == 1) { }
+            RayGui.GuiButton(new(340, 270, 600, 100), "Story Mode (In Works)");
+            RayGui.GuiButton(new(340, 400, 285, 100), "Options");
+            if (RayGui.GuiButton(new(655, 400, 285, 100), "Quit") == 1)
+            {
+                Environment.Exit(0);
+            }
+
         }
         internal override Scene SetNextScene()
         {
