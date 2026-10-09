@@ -1,11 +1,14 @@
 ﻿using Raylib_cs;
 using raygui_cs;
 using System.Numerics;
+using Astride.Core.Scenes;
 
 namespace Astride.Core
 {
     public class Game
     {
+        private Scene scene;
+
         public Rectangle src;
         public Rectangle dest;
         public RenderTexture2D renderTexture;
@@ -17,16 +20,31 @@ namespace Astride.Core
             origin = new Vector2(width / 2, height / 2);
             src = new Rectangle(0, 0, width, -height);
             dest = new Rectangle(0, 0, width, height);
+            scene = new MainMenuScene();
         }
 
         public void Update()
         {
-            Raygui.GuiSetStyle((int)GuiControl.DEFAULT, (int)GuiDefaultProperty.TEXT_SIZE, 32);
-            Raygui.GuiDrawText("Test", new Rectangle(10, 10, 100, 30), 30, Color.Black);
+            scene.Update();
         }
         public void Render()
         {
-
+            scene.Render();
         }
+
+        public void UI()
+        {
+            scene.UI();
+        }
+
+        public void getNextScene()
+        {
+            if (scene.SetNextScene() is not null)
+            {
+                scene = scene.SetNextScene();
+            }
+        }
+
+
     }
 }

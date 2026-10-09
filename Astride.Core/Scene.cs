@@ -1,6 +1,6 @@
 ﻿using Astride.Input;
 
-namespace Astride.Core.Scenes
+namespace Astride.Core
 {
     abstract internal class Scene
     {
@@ -9,9 +9,9 @@ namespace Astride.Core.Scenes
 
         abstract public void UI();
 
-        abstract internal void SetNextScene(Scene nextScene);
+        abstract internal Scene SetNextScene();
 
-        virtual internal void InputUpdate(params IInputManager[] inputManagers)
+        virtual internal void InputUpdate(params ControlListener[] inputManagers)
         {
             foreach (var inputManager in inputManagers)
             {

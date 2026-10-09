@@ -20,9 +20,17 @@ while (!Raylib.WindowShouldClose())
     Raylib.BeginDrawing();
     Raylib.ClearBackground(Color.White);
 #if DEBUG
-    Raylib.DrawLine((int)game.dest.X + (int)game.dest.Width, (int)game.dest.Y, (int)game.dest.X + (int)game.dest.Width, (int)game.dest.Y + (int)game.dest.Height, Color.Black);
+    //Raylib.DrawLine((int)game.dest.X + (int)game.dest.Width, (int)game.dest.Y, (int)game.dest.X + (int)game.dest.Width, (int)game.dest.Y + (int)game.dest.Height, Color.Black);
+
+    Raygui.GuiSetStyle((int)GuiControl.DEFAULT, (int)GuiDefaultProperty.TEXT_SIZE, 20);
+    Raygui.GuiDrawText("FPS: " + Raylib.GetFPS(), new Rectangle(10, 10, 100, 30), 30, Color.Black);
+    Raygui.GuiDrawText("MousePos: " + Raylib.GetMousePosition(), new Rectangle(10, 40, 300, 30), 30, Color.Black);
 #endif
+    //draw game render texture to screen
     Raylib.DrawTexturePro(game.renderTexture.Texture, game.src, game.dest, Vector2.Zero, 0, Color.White);
+
+    //raygui updates
+    game.UI();
     Raylib.EndDrawing();
 
     //reset gui
