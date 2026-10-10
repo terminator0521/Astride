@@ -4,14 +4,20 @@ namespace Astride.Core
 {
     abstract internal class Scene
     {
-        abstract public void Update();
-        abstract public void Render();
+        /// <summary>
+        /// null means no change <br/>
+        /// negative hints previous scenes <br/>
+        /// positive hints next scenes
+        /// </summary>
+        protected abstract int NextScene { get; protected private set; }
+        internal abstract void Update();
+        internal abstract void Render();
 
-        abstract public void UI();
+        internal abstract void UI();
 
-        abstract internal Scene SetNextScene();
+        internal abstract Scene SetNextScene();
 
-        virtual internal void InputUpdate(params ControlListener[] inputManagers)
+        virtual internal void InputUpdate(params IInputHandler[] inputManagers)
         {
             foreach (var inputManager in inputManagers)
             {

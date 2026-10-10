@@ -1,6 +1,6 @@
 ﻿namespace Astride.Input
 {
-    public interface ControlListener
+    public interface IInputHandler
     {
         public void InputUpdate();
     }

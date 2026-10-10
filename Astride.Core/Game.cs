@@ -24,7 +24,14 @@ namespace Astride.Core
 
         public void Update()
         {
+            //update scene logic
             _scene.Update();
+
+            //check for scene checks
+            if (_scene.SetNextScene() is not null)
+            {
+                _scene = _scene.SetNextScene();
+            }
         }
         public void Render()
         {
@@ -35,15 +42,5 @@ namespace Astride.Core
         {
             _scene.UI();
         }
-
-        public void getNextScene()
-        {
-            if (_scene.SetNextScene() is not null)
-            {
-                _scene = _scene.SetNextScene();
-            }
-        }
-
-
     }
 }
