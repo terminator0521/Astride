@@ -10,7 +10,7 @@ namespace Astride.Core.Scenes
     {
         protected override int NextScene { get; protected private set; }
         bool isPaused;
-        Entity player = new PlayerEntity(10, 10, new(300, 300), 10f);
+        Entity player = new TestEntity(10, 10, new(300, 300), 10f);
 
         public FreeplayScene()
         {
