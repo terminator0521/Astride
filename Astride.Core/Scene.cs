@@ -17,6 +17,10 @@ namespace Astride.Core
 
         internal abstract Scene SetNextScene();
 
+        /// <summary>
+        /// Handles inputs. Must call in Update().
+        /// </summary>
+        /// <param name="inputManagers"></param> Objects that inherit the IInputHandler interface.
         virtual internal void InputUpdate(params IInputHandler[] inputManagers)
         {
             foreach (var inputManager in inputManagers)
