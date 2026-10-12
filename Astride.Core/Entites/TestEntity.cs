@@ -10,13 +10,10 @@ namespace Astride.Core.Entites
 {
     internal class TestEntity : Entity, IInputHandler
     {
-        internal TestEntity(Texture textureSource, int width, int height, Vector2 initialPosition, float speed) : base(textureSource, width, height, initialPosition, speed)
+        internal TestEntity() : base(64, 64)
         {
-            this.speed = speed;
-        }
-        internal TestEntity(int width, int height, Vector2 initialPosition, float speed) : base(width, height, initialPosition, speed)
-        {
-            this.speed = speed;
+            speed = 200f;
+            pos = new Vector2(400, 300);
         }
 
         internal override void Update()

@@ -3,7 +3,7 @@ using System.Numerics;
 using ZeroElectric.Vinculum;
 
 Raylib.InitWindow(1280, 720, "Astride");
-var game = new Game(720, 720);
+var game = new Game(1100, 720);
 Raylib.SetTargetFPS(Raylib.GetMonitorRefreshRate(Raylib.GetCurrentMonitor()));
 Raylib.SetExitKey(KeyboardKey.KEY_NULL);
 
@@ -20,7 +20,7 @@ while (!Raylib.WindowShouldClose())
     Raylib.BeginDrawing();
     Raylib.ClearBackground(Raylib.WHITE);
 #if DEBUG
-    //Raylib.DrawLine((int)game.dest.X + (int)game.dest.Width, (int)game.dest.Y, (int)game.dest.X + (int)game.dest.Width, (int)game.dest.Y + (int)game.dest.Height, Color.Black);
+    Raylib.DrawLine((int)game.dest.X + (int)game.dest.Width, (int)game.dest.Y, (int)game.dest.X + (int)game.dest.Width, (int)game.dest.Y + (int)game.dest.Height, Raylib.BLACK);
 
     Raylib.DrawText("FPS: " + Raylib.GetFPS(), 10, 10, 20, Raylib.BLACK);
     Raylib.DrawText("MousePos: " + Raylib.GetMousePosition(), 10, 30, 20, Raylib.BLACK);

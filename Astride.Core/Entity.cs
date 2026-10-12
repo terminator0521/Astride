@@ -32,30 +32,20 @@ namespace Astride.Core
         /// <summary>
         /// Center position
         /// </summary>
-        protected Vector2 pos;
+        internal Vector2 pos;
 
         protected Vector2 displacement = Vector2.Zero;
 
-        internal Entity(Texture textureSource, int width, int height, Vector2 initialPosition, float speed)
+        internal Entity(int width, int height) 
         {
-            this.dest = new Rectangle(0, 0, width, height);
-            this.src = new Rectangle(0, 0, width, height);
-            this.textureSource = textureSource;
-            this.pos = initialPosition;
-            this.speed = speed;
-        }
-        internal Entity(int width, int height, Vector2 initialPosition, float speed)
-        {
-            this.dest = new Rectangle(0, 0, width, height);
-            this.src = new Rectangle(0, 0, width, height);
-            this.pos = initialPosition;
-            this.speed = speed;
+            dest = new Rectangle(0, 0, width, height);
+            src = new Rectangle(0, 0, width, height);
         }
 
         internal virtual void Update()
         {
             //update position    
-            pos += displacement;
+            pos += displacement * Raylib.GetFrameTime();
 
             //update dest position
             dest.X = pos.X;
