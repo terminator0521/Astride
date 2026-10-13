@@ -11,7 +11,7 @@
 		<AllowUnsafeBlocks>enable</AllowUnsafeBlocks>
 		<OutputType Condition="'$(Configuration)' == 'Release'">WinExe</OutputType>
 		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-		<RunWorkingDirectory>$(SolutionDir)</RunWorkingDirectory>
+		<RunWorkingDirectory>$(SolutionDir)/Astride.Core</RunWorkingDirectory>
 	</PropertyGroup>
 
 	<ItemGroup>

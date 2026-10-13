@@ -8,6 +8,20 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+	  <None Remove="Assets\Backgrounds\Debug.png" />
+	  <None Remove="Assets\Textures\Player.png" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Content Include="Assets\Backgrounds\Debug.png">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </Content>
+	  <Content Include="Assets\Textures\Player.png">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </Content>
+	</ItemGroup>
+
+	<ItemGroup>
 		<PackageReference Include="Raylib-CSharp-Vinculum" Version="5.0.1" />
 	</ItemGroup>
 
