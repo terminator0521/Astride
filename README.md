@@ -10,7 +10,7 @@ This is my game I am making for Hack Club Terra.
 
 
 
-This game is made using Vinculum's C# port of Raylib and Raygui by Raysan5 meant for C. 
+This game is made using Vinculum's C# port of Raylib and Raygui by Raysan5 meant for C.
 
 
 
@@ -18,7 +18,7 @@ This game is made using Vinculum's C# port of Raylib and Raygui by Raysan5 meant
 
 
 
-This is a shooter that requires you to shoot in order to move around, with the goal of saving lost astronauts and fight bosses
+This is a shooter that requires you to shoot in order to move around, with the goal of saving lost astronauts and fight bosses.
 
 
 
@@ -27,3 +27,11 @@ This is a shooter that requires you to shoot in order to move around, with the g
 
 
 No AI was used to contribute to this project.
+
+
+
+## NOTES
+
+
+
+Currently, you may only use W, A, S, D to move the test entity in freeplay.
