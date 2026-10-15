@@ -8,13 +8,12 @@ namespace Astride.Core.Scenes
     internal class FreeplayScene : Scene
     {
         Texture background = Raylib.LoadTexture("Assets/Backgrounds/Debug.png");
+        Vector2 playerDisplacement = new Vector2(0);
         protected override int NextScene { get; protected private set; }
         bool isPaused;
-        PlayerEntity player;
-        List<Entity> entityList = new List<Entity>();
-
+        PlayerEndlessEntity player;
+        List<Entity> entityList = new List<Entity>(1);
         Vector2 size = new Vector2(1100, 720);
-
         Camera2D cam;
         public FreeplayScene()
         {
@@ -24,21 +23,28 @@ namespace Astride.Core.Scenes
                 rotation = 0,
                 zoom = 1
             };
-            player = new PlayerEntity();
+            player = new PlayerEndlessEntity();
+            entityList.Add(player);
         }
 
         internal override void Update()
         {
-            InputUpdate(player);
+            //update player
             cam.target = player.CenterPos;
-            player.Update(ref cam);
+            InputUpdate(player);
+            foreach (Entity e in entityList)
+            {
+
+            }
         }
         internal override void Render()
         {
-
             Raylib.BeginMode2D(cam);
             Raylib.DrawTexture(background, 0, 0, Raylib.WHITE);
+            //render player
             player.Render();
+
+
             Raylib.EndMode2D();
         }
         internal override void UI()

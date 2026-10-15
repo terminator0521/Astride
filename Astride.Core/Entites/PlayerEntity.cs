@@ -9,18 +9,19 @@ namespace Astride.Core.Entites
     internal class PlayerEntity : Entity, IInputHandler
     {
         private Camera2D cam;
-        private float maxSpeed = 800f;
+        private float maxSpeed = 600f;
 
-        public PlayerEntity() : base(64, 64)
+        internal PlayerEntity() : base(64, 64)
         {
-            speed = 300f;
+            speed = 25f;
         }
 
         public void InputUpdate()
         {
-            if (Raylib.IsMouseButtonPressed(MouseButton.MOUSE_BUTTON_LEFT))
+            if (Raylib.IsMouseButtonDown(MouseButton.MOUSE_BUTTON_LEFT))
             {
                 displacement += Vector2.Normalize(Raylib.GetScreenToWorld2D(Raylib.GetMousePosition(), cam) - CenterPos) * -speed;
+                Console.WriteLine(displacement.Length());
             }
         }
 
@@ -30,7 +31,7 @@ namespace Astride.Core.Entites
             Raylib.DrawLineEx(Raylib.GetScreenToWorld2D(Raylib.GetMousePosition(), cam), CenterPos, 10, Raylib.RED);
         }
 
-        internal void Update(ref Camera2D cam)
+        internal void Update(in Camera2D cam)
         {
             //update camera
             this.cam = cam;

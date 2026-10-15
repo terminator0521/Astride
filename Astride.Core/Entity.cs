@@ -80,5 +80,10 @@ namespace Astride.Core
             else
                 Raylib.DrawRectanglePro(dest, Vector2.Zero, 0f, Raylib.BLACK);
         }
+
+        internal virtual void onCollision(Entity e)
+        {
+            pos -= displacement; //reverse movement
+        }
     }
 }
