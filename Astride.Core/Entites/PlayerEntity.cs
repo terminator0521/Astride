@@ -21,7 +21,6 @@ namespace Astride.Core.Entites
             if (Raylib.IsMouseButtonDown(MouseButton.MOUSE_BUTTON_LEFT))
             {
                 displacement += Vector2.Normalize(Raylib.GetScreenToWorld2D(Raylib.GetMousePosition(), cam) - CenterPos) * -speed;
-                Console.WriteLine(displacement.Length());
             }
         }
 

@@ -32,7 +32,6 @@ namespace Astride.Core.Entites
             if (Raylib.IsMouseButtonDown(MouseButton.MOUSE_BUTTON_LEFT))
             {
                 displacement += Vector2.Normalize(Raylib.GetScreenToWorld2D(Raylib.GetMousePosition(), cam) - CenterPos) * speed;
-                Console.WriteLine(displacement.Length());
             }
         }
 
@@ -47,10 +46,9 @@ namespace Astride.Core.Entites
             this.cam = cam;
 
             //limit speed
-            if (displacement.Length() > maxSpeed)
+            if (displacement.Length() > maxSpeed - 25)
                 displacement = Vector2.Normalize(displacement) * maxSpeed;
-
-            base.Update();
+            Console.WriteLine(displacement.Length());
         }
     }
 }

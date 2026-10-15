@@ -34,8 +34,8 @@ namespace Astride.Core.Scenes
                 {
                     cam.target = player.CenterPos;
                     InputUpdate(player);
-                    player.Update();
-                    dis = player.Displacement;
+                    player.Update(cam);
+                    //dis = player.Displacement;
                 }
                 else
                 {
@@ -47,7 +47,6 @@ namespace Astride.Core.Scenes
         {
             Raylib.BeginMode2D(cam);
             Raylib.DrawTexture(background, 0, 0, Raylib.WHITE);
-            //render player
 
             foreach (var e in entityList)
             {
@@ -63,6 +62,8 @@ namespace Astride.Core.Scenes
 
         internal override Scene SetNextScene()
         {
+            if (Raylib.IsKeyPressed(KeyboardKey.KEY_BACKSPACE))
+                return new MainMenuScene();
             return null;
         }
 
