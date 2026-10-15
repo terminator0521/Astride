@@ -1,14 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO.Compression;
-using System.Numerics;
-using System.Text;
+﻿using System.Numerics;
 using ZeroElectric.Vinculum;
 
 namespace Astride.Core
 {
     internal abstract class Entity
     {
+        /// <summary>
+        /// Returns real position with origin adjustment
+        /// </summary>
+        internal Vector2 CenterPos
+        {
+            get
+            {
+                return pos + origin;
+            }
+        }
+
         /// <summary>
         /// Movement speed of entity
         /// </summary>
@@ -34,14 +41,28 @@ namespace Astride.Core
         /// </summary>
         internal Vector2 pos;
 
+        /// <summary>
+        /// Origin and rotation
+        /// </summary>
+        internal Vector2 origin;
+
+        /// <summary>
+        /// displacement vector used to update position per frame
+        /// </summary>
         protected Vector2 displacement = Vector2.Zero;
 
-        internal Entity(int width, int height) 
+
+
+        internal Entity(int width, int height)
         {
-            dest = new Rectangle(0, 0, width, height);
-            src = new Rectangle(0, 0, width, height);
+            dest = new Rectangle(0f, 0f, width, height);
+            src = new Rectangle(0f, 0f, width, height);
+            origin = new Vector2(width / 2, height / 2);
         }
 
+        /// <summary>
+        /// Update logic. Only use frametime adjustments here
+        /// </summary>
         internal virtual void Update()
         {
             //update position    
@@ -55,7 +76,7 @@ namespace Astride.Core
         internal virtual void Render()
         {
             if (Raylib.IsTextureReady(textureSource))
-                Raylib.DrawTexturePro(textureSource, src, dest, Vector2.Zero, 0, Raylib.WHITE);
+                Raylib.DrawTexturePro(textureSource, src, dest, Vector2.Zero, 0f, Raylib.WHITE);
             else
                 Raylib.DrawRectanglePro(dest, Vector2.Zero, 0f, Raylib.BLACK);
         }

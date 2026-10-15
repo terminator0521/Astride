@@ -1,30 +1,46 @@
 ﻿using Astride.Input;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using System.Numerics;
+using ZeroElectric.Vinculum;
 
 namespace Astride.Core.Entites
 {
+
+
     internal class PlayerEntity : Entity, IInputHandler
     {
+        private Camera2D cam;
+        private float maxSpeed = 800f;
+
         public PlayerEntity() : base(64, 64)
         {
             speed = 300f;
-
         }
 
         public void InputUpdate()
         {
-            throw new NotImplementedException();
+            if (Raylib.IsMouseButtonPressed(MouseButton.MOUSE_BUTTON_LEFT))
+            {
+                displacement += Vector2.Normalize(Raylib.GetScreenToWorld2D(Raylib.GetMousePosition(), cam) - CenterPos) * speed;
+            }
         }
-        
+
         internal override void Render()
         {
             base.Render();
+            Raylib.DrawLineEx(Raylib.GetScreenToWorld2D(Raylib.GetMousePosition(), cam), CenterPos, 10, Raylib.RED);
         }
 
-        internal override void Update()
+        internal void Update(ref Camera2D cam)
         {
+            //update camera
+            this.cam = cam;
+
+            //limit speed
+            if (displacement.Length() > maxSpeed)
+                displacement = Vector2.Normalize(displacement) * maxSpeed;
+
+
+            //base updates
             base.Update();
         }
     }

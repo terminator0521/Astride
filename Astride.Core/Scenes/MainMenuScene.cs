@@ -38,10 +38,5 @@ namespace Astride.Core.Scenes
             }
             return null;
         }
-
-        //protected override void InputUpdate(params ControlListener[] inputManagers)
-        //{
-        //    base.InputUpdate(inputManagers);
-        //}
     }
 }

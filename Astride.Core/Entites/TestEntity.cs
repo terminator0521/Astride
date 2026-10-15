@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Astride.Input;
 using System.Numerics;
 using ZeroElectric.Vinculum;
-using ZeroElectric.Vinculum.Extensions;
-using Astride.Input;
 
 namespace Astride.Core.Entites
 {
@@ -30,7 +26,7 @@ namespace Astride.Core.Entites
         {
             displacement = Vector2.Zero;
 
-            displacement.X += (Raylib.IsKeyDown(KeyboardKey.KEY_A) ? -1 : 0) + (Raylib.IsKeyDown(KeyboardKey.KEY_D) ? 1: 0);
+            displacement.X += (Raylib.IsKeyDown(KeyboardKey.KEY_A) ? -1 : 0) + (Raylib.IsKeyDown(KeyboardKey.KEY_D) ? 1 : 0);
             displacement.Y += (Raylib.IsKeyDown(KeyboardKey.KEY_S) ? 1 : 0) + (Raylib.IsKeyDown(KeyboardKey.KEY_W) ? -1 : 0);
 
             displacement = RayMath.Vector2Normalize(displacement) * speed;
