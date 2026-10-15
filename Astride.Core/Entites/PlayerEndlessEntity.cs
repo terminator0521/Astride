@@ -9,9 +9,18 @@ namespace Astride.Core.Entites
     internal class PlayerEndlessEntity : Entity, IInputHandler
     {
         private Camera2D cam;
+
+        //max player speed
         private float maxSpeed = 600f;
 
-
+        //player displacement getter for scene
+        internal Vector2 Displacement
+        {
+            get
+            {
+                return displacement;
+            }
+        }
 
         internal PlayerEndlessEntity() : base(64, 64)
         {
@@ -35,6 +44,8 @@ namespace Astride.Core.Entites
 
         internal new void Update(in Camera2D cam)
         {
+            this.cam = cam;
+
             //limit speed
             if (displacement.Length() > maxSpeed)
                 displacement = Vector2.Normalize(displacement) * maxSpeed;
