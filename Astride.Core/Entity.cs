@@ -52,7 +52,10 @@ namespace Astride.Core
         protected Vector2 displacement = Vector2.Zero;
 
 
+        internal Entity()
+        {
 
+        }
         internal Entity(int width, int height)
         {
             dest = new Rectangle(0f, 0f, width, height);
@@ -81,9 +84,6 @@ namespace Astride.Core
                 Raylib.DrawRectanglePro(dest, Vector2.Zero, 0f, Raylib.BLACK);
         }
 
-        internal virtual void onCollision(Entity e)
-        {
-            pos -= displacement; //reverse movement
-        }
+        internal abstract void onCollision(Entity e);
     }
 }

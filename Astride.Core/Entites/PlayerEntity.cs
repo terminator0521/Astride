@@ -8,8 +8,8 @@ namespace Astride.Core.Entites
 
     internal class PlayerEntity : Entity, IInputHandler
     {
-        private Camera2D cam;
-        private float maxSpeed = 600f;
+        private Camera2D _cam;
+        private float _maxSpeed = 600f;
 
         internal PlayerEntity() : base(64, 64)
         {
@@ -20,28 +20,33 @@ namespace Astride.Core.Entites
         {
             if (Raylib.IsMouseButtonDown(MouseButton.MOUSE_BUTTON_LEFT))
             {
-                displacement += Vector2.Normalize(Raylib.GetScreenToWorld2D(Raylib.GetMousePosition(), cam) - CenterPos) * -speed;
+                displacement += Vector2.Normalize(Raylib.GetScreenToWorld2D(Raylib.GetMousePosition(), _cam) - CenterPos) * -speed;
             }
         }
 
         internal override void Render()
         {
             base.Render();
-            Raylib.DrawLineEx(Raylib.GetScreenToWorld2D(Raylib.GetMousePosition(), cam), CenterPos, 10, Raylib.RED);
+            Raylib.DrawLineEx(Raylib.GetScreenToWorld2D(Raylib.GetMousePosition(), _cam), CenterPos, 10, Raylib.RED);
         }
 
         internal void Update(in Camera2D cam)
         {
             //update camera
-            this.cam = cam;
+            this._cam = cam;
 
             //limit speed
-            if (displacement.Length() > maxSpeed)
-                displacement = Vector2.Normalize(displacement) * maxSpeed;
+            if (displacement.Length() > _maxSpeed)
+                displacement = Vector2.Normalize(displacement) * _maxSpeed;
 
 
             //base updates
             base.Update();
+        }
+
+        internal override void onCollision(Entity e)
+        {
+            throw new NotImplementedException();
         }
     }
 }

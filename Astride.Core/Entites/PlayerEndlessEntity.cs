@@ -8,10 +8,10 @@ namespace Astride.Core.Entites
 
     internal class PlayerEndlessEntity : Entity, IInputHandler
     {
-        private Camera2D cam;
+        private Camera2D _cam;
 
         //max player speed
-        private float maxSpeed = 600f;
+        private float _maxSpeed = 600f;
 
         //player displacement getter for scene
         internal Vector2 Displacement
@@ -31,24 +31,28 @@ namespace Astride.Core.Entites
         {
             if (Raylib.IsMouseButtonDown(MouseButton.MOUSE_BUTTON_LEFT))
             {
-                displacement += Vector2.Normalize(Raylib.GetScreenToWorld2D(Raylib.GetMousePosition(), cam) - CenterPos) * speed;
+                displacement += Vector2.Normalize(Raylib.GetScreenToWorld2D(Raylib.GetMousePosition(), _cam) - CenterPos) * speed;
             }
         }
 
         internal override void Render()
         {
             base.Render();
-            Raylib.DrawLineEx(Raylib.GetScreenToWorld2D(Raylib.GetMousePosition(), cam), CenterPos, 10, Raylib.RED);
+            Raylib.DrawLineEx(Raylib.GetScreenToWorld2D(Raylib.GetMousePosition(), _cam), CenterPos, 10, Raylib.RED);
         }
 
         internal new void Update(in Camera2D cam)
         {
-            this.cam = cam;
+            this._cam = cam;
 
             //limit speed
-            if (displacement.Length() > maxSpeed - 25)
-                displacement = Vector2.Normalize(displacement) * maxSpeed;
-            Console.WriteLine(displacement.Length());
+            if (displacement.Length() > _maxSpeed)
+                displacement = Vector2.Normalize(displacement) * _maxSpeed;
+        }
+
+        internal override void onCollision(Entity e)
+        {
+            
         }
     }
 }

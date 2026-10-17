@@ -11,9 +11,11 @@ namespace Astride.Core.Scenes
         Vector2 dis = new Vector2(0); //scene objects displacement based on player displacement
         protected override int NextScene { get; protected private set; }
         bool isPaused;
-        List<Entity> entityList = new List<Entity>(1);
+        List<Entity> entityList;
         Vector2 size = new Vector2(1100, 720);
         Camera2D cam;
+
+        Vector2 playerPos;
 
         public FreeplayScene()
         {
@@ -23,7 +25,12 @@ namespace Astride.Core.Scenes
                 rotation = 0,
                 zoom = 1
             };
-            entityList.Add(new PlayerEndlessEntity());
+            entityList = new List<Entity>
+            {
+                new PlayerEndlessEntity(),
+                new BlackHoleEntity(size, cam)
+            };
+
         }
 
         internal override void Update()
@@ -33,9 +40,13 @@ namespace Astride.Core.Scenes
                 if (e is PlayerEndlessEntity player) //if player do player stuff (gurenteed)
                 {
                     cam.target = player.CenterPos;
+                    playerPos = player.CenterPos;
                     InputUpdate(player);
                     player.Update(cam);
-                    //dis = player.Displacement;
+                }
+                else if (e is BlackHoleEntity blackHole)
+                {
+                    blackHole.Update(size / 2);
                 }
                 else
                 {
