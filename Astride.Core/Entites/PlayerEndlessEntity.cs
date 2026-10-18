@@ -1,5 +1,6 @@
 ﻿using Astride.Input;
 using System.Numerics;
+using System.Reflection;
 using ZeroElectric.Vinculum;
 
 namespace Astride.Core.Entites
@@ -31,7 +32,7 @@ namespace Astride.Core.Entites
         {
             if (Raylib.IsMouseButtonDown(MouseButton.MOUSE_BUTTON_LEFT))
             {
-                displacement += Vector2.Normalize(Raylib.GetScreenToWorld2D(Raylib.GetMousePosition(), _cam) - CenterPos) * speed;
+                displacement += Vector2.Negate(Vector2.Normalize(Raylib.GetScreenToWorld2D(Raylib.GetMousePosition(), _cam) - CenterPos) * speed);
             }
         }
 
@@ -45,7 +46,6 @@ namespace Astride.Core.Entites
         {
             this._cam = cam;
 
-            //limit speed
             if (displacement.Length() > _maxSpeed)
                 displacement = Vector2.Normalize(displacement) * _maxSpeed;
         }

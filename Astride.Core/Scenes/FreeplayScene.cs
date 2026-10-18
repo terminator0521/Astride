@@ -17,6 +17,8 @@ namespace Astride.Core.Scenes
 
         Vector2 playerPos;
 
+        Vector2 playerDis;
+
         public FreeplayScene()
         {
             cam = new Camera2D
@@ -41,12 +43,13 @@ namespace Astride.Core.Scenes
                 {
                     cam.target = player.CenterPos;
                     playerPos = player.CenterPos;
+                    playerDis = player.Displacement;
                     InputUpdate(player);
                     player.Update(cam);
                 }
                 else if (e is BlackHoleEntity blackHole)
                 {
-                    blackHole.Update(size / 2);
+                    blackHole.Update(in playerDis);
                 }
                 else
                 {
