@@ -22,11 +22,13 @@ This is a shooter that requires you to shoot in order to move around, with the g
 
 
 
-## AI Disclosure
+## How to Run
 
 
 
-No AI was used to contribute to this project.
+1. Download the latest Astride_Win64.zip
+2. Extract the folder inside the zip
+3. Run Astride.exe in the folder extracted
 
 
 
