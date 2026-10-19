@@ -51,14 +51,36 @@ namespace Astride.Core
         /// </summary>
         protected Vector2 displacement = Vector2.Zero;
 
-
+        /// <summary>
+        /// Construct with undeclared pos and size
+        /// </summary>
         internal Entity()
         {
 
         }
+
+        /// <summary>
+        /// Contruct with declared size and undeclared pos
+        /// </summary>
+        /// <param name="width">Width of entity</param>
+        /// <param name="height">Size of entity</param>
         internal Entity(int width, int height)
         {
             dest = new Rectangle(0f, 0f, width, height);
+            src = new Rectangle(0f, 0f, width, height);
+            origin = new Vector2(width / 2, height / 2);
+        }
+
+
+        /// <summary>
+        /// Construct with declared pos and size
+        /// </summary>
+        /// <param name="width">Width of entity</param>
+        /// <param name="height">Size of entity</param>
+        /// <param name="pos">Position of entity</param>
+        internal Entity(int width, int height, Vector2 pos)
+        {
+            dest = new Rectangle(pos.X, pos.Y, width, height);
             src = new Rectangle(0f, 0f, width, height);
             origin = new Vector2(width / 2, height / 2);
         }
@@ -87,7 +109,7 @@ namespace Astride.Core
         /// <summary>
         /// Collision logic
         /// </summary>
-        /// <param name="e">Entity Collided with</param>
+        /// <param name="entities">Entity(s) collided with</param>
         internal abstract void OnCollision(params Entity[] entities);
     }
 }

@@ -5,11 +5,11 @@ namespace Astride.Core
     abstract internal class Scene
     {
         /// <summary>
-        /// null means no change <br/>
+        /// 0 means no change <br/>
         /// negative hints previous scenes <br/>
         /// positive hints next scenes
         /// </summary>
-        protected abstract int NextScene { get; protected private set; }
+        protected int NextScene { get; protected private set; } = 0;
 
         /// <summary>
         /// Handle logic updates

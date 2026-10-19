@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Numerics;
-using System.Text;
+﻿using System.Numerics;
 using ZeroElectric.Vinculum;
 
 namespace Astride.Core.Entites.EndlessMode
@@ -14,6 +11,7 @@ namespace Astride.Core.Entites.EndlessMode
             speed = 300f;
             Vector2 startPos = Raylib.GetScreenToWorld2D(Vector2.Zero, cam);
             dest = new Rectangle(startPos.X, startPos.Y, 0, gameSize.Y);
+
         }
 
         internal new void Update(in Vector2 playerDisplacement)
@@ -23,13 +21,12 @@ namespace Astride.Core.Entites.EndlessMode
         }
         internal override void Render()
         {
-
             base.Render();
         }
 
         internal override void OnCollision(params Entity[] entities)
         {
-            
+
         }
     }
 }

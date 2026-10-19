@@ -4,9 +4,6 @@ namespace Astride.Core.Scenes
 {
     internal class MainMenuScene : Scene
     {
-        protected override int NextScene { get; protected private set; }
-
-
         internal override void Update()
         {
 

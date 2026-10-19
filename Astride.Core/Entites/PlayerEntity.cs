@@ -1,6 +1,5 @@
 ﻿using Astride.Input;
 using System.Numerics;
-using System.Reflection.Metadata;
 using ZeroElectric.Vinculum;
 
 namespace Astride.Core.Entites
@@ -12,9 +11,12 @@ namespace Astride.Core.Entites
         private Camera2D _cam;
         private float _maxSpeed = 600f;
 
+        internal int PlayerLives { get; private set; }
+
         internal PlayerEntity() : base(64, 64)
         {
             speed = 25f;
+            PlayerLives = 1;
         }
 
         public void InputUpdate()
@@ -49,7 +51,7 @@ namespace Astride.Core.Entites
         {
             foreach (Entity e in entities)
             {
-                
+
             }
         }
     }

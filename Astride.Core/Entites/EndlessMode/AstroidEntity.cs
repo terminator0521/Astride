@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Diagnostics;
-using System.Numerics;
-using System.Runtime.CompilerServices;
+﻿using System.Numerics;
 using System.Security.Cryptography;
-using System.Text;
 using ZeroElectric.Vinculum;
 
 namespace Astride.Core.Entites.EndlessMode
@@ -17,18 +11,16 @@ namespace Astride.Core.Entites.EndlessMode
         private static float[] s_respawnTime = { 1f, 2f, 3f };
         private float _currentWaitTime = 0;
 
-
-
-        internal AstroidEntity(Vector2 startPos) : base(24, 24)
+        internal AstroidEntity(Vector2 startPos) : base(24, 24, new Vector2(600, 600))
         {
             _startPos = startPos;
+            pos = startPos;
             _currentWaitTime = 0;
             speed = 200f;
         }
 
         internal new void Update(in Vector2 playerPos, in Vector2 dis)
         {
-            Console.WriteLine(pos);
             if (IsEnabled)
             {
                 displacement = Vector2.Normalize(displacement + -dis) * speed; //adjust displacement with speed and player relative displacement
@@ -63,6 +55,7 @@ namespace Astride.Core.Entites.EndlessMode
         {
             if (IsEnabled)
             {
+                Console.WriteLine("Astroid @: " + pos);
                 foreach (var e in entities)
                 {
                     if (e is PlayerEndlessEntity)

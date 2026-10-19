@@ -9,7 +9,6 @@ namespace Astride.Core.Scenes
     {
         Texture background = Raylib.LoadTexture("Assets/Backgrounds/Debug.png");
         Vector2 dis = new Vector2(0); //scene objects displacement based on player displacement
-        protected override int NextScene { get; protected private set; }
         bool isPaused;
         List<Entity> entityList;
         Vector2 size = new Vector2(1100, 720);
@@ -30,7 +29,7 @@ namespace Astride.Core.Scenes
             entityList = new List<Entity>
             {
                 new PlayerEndlessEntity(),
-                new AstroidEntity(new Vector2(200, 200)),
+                new AstroidEntity(new Vector2(300, 400)),
                 new BlackHoleEntity(size, cam)
             };
 
@@ -47,6 +46,8 @@ namespace Astride.Core.Scenes
                     playerDis = player.Displacement;
                     InputUpdate(player);
                     player.Update(cam);
+                    if (player.Health <= 0)
+                        NextScene = -1;
                 }
                 else if (e is BlackHoleEntity blackHole)
                 {
@@ -56,6 +57,19 @@ namespace Astride.Core.Scenes
                 {
                     astroid.Update(in playerPos, in playerDis);
                 }
+            }
+
+            for (int i = 0; i < entityList.Count; i++)
+            {
+                for (int j = i + 1; j < entityList.Count; j++)
+                {
+                    if (Raylib.CheckCollisionRecs(entityList[i].dest, entityList[j].dest))
+                    {
+                        entityList[i].OnCollision(entityList[j]);
+                        entityList[j].OnCollision(entityList[i]);
+                    }
+                }
+
             }
         }
         internal override void Render()
@@ -79,12 +93,20 @@ namespace Astride.Core.Scenes
         {
             if (Raylib.IsKeyPressed(KeyboardKey.KEY_BACKSPACE))
                 return new MainMenuScene();
-            return null;
+
+            switch (NextScene)
+            {
+                case -1:
+                    return new MainMenuScene();
+                default:
+                    return null;
+            }
         }
 
         internal override void InputUpdate(params IInputHandler[] inputManagers)
         {
-            base.InputUpdate(inputManagers);
+            foreach (var inputManager in inputManagers)
+                base.InputUpdate(inputManagers);
         }
     }
 }

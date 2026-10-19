@@ -1,6 +1,5 @@
 ﻿using Astride.Input;
 using System.Numerics;
-using System.Reflection;
 using ZeroElectric.Vinculum;
 
 namespace Astride.Core.Entites.EndlessMode
@@ -14,6 +13,10 @@ namespace Astride.Core.Entites.EndlessMode
         //max player speed
         private float _maxSpeed = 600f;
 
+        //player lives
+        internal int Health { get; private set; }
+
+
         //player displacement getter for scene
         internal Vector2 Displacement
         {
@@ -26,6 +29,7 @@ namespace Astride.Core.Entites.EndlessMode
         internal PlayerEndlessEntity() : base(64, 64)
         {
             speed = 25f;
+            Health = 1;
         }
 
         public void InputUpdate()
@@ -52,9 +56,18 @@ namespace Astride.Core.Entites.EndlessMode
 
         internal override void OnCollision(params Entity[] entities)
         {
+            Console.WriteLine("Player @: " + pos);
+
             foreach (Entity e in entities)
             {
-
+                if (e is AstroidEntity)
+                {
+                    Health--;
+                }
+                else if (e is BlackHoleEntity)
+                {
+                    Health = 0;
+                }
             }
         }
     }
