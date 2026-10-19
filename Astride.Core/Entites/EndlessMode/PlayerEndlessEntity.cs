@@ -3,7 +3,7 @@ using System.Numerics;
 using System.Reflection;
 using ZeroElectric.Vinculum;
 
-namespace Astride.Core.Entites
+namespace Astride.Core.Entites.EndlessMode
 {
 
 
@@ -50,9 +50,12 @@ namespace Astride.Core.Entites
                 displacement = Vector2.Normalize(displacement) * _maxSpeed;
         }
 
-        internal override void onCollision(Entity e)
+        internal override void OnCollision(params Entity[] entities)
         {
-            
+            foreach (Entity e in entities)
+            {
+
+            }
         }
     }
 }

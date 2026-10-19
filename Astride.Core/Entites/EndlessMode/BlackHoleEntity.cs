@@ -4,7 +4,7 @@ using System.Numerics;
 using System.Text;
 using ZeroElectric.Vinculum;
 
-namespace Astride.Core.Entites
+namespace Astride.Core.Entites.EndlessMode
 {
     internal class BlackHoleEntity : Entity
     {
@@ -27,7 +27,7 @@ namespace Astride.Core.Entites
             base.Render();
         }
 
-        internal override void onCollision(Entity e)
+        internal override void OnCollision(params Entity[] entities)
         {
             
         }

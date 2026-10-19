@@ -1,4 +1,4 @@
-﻿using Astride.Core.Entites;
+﻿using Astride.Core.Entites.EndlessMode;
 using Astride.Input;
 using System.Numerics;
 using ZeroElectric.Vinculum;
@@ -30,6 +30,7 @@ namespace Astride.Core.Scenes
             entityList = new List<Entity>
             {
                 new PlayerEndlessEntity(),
+                new AstroidEntity(new Vector2(200, 200)),
                 new BlackHoleEntity(size, cam)
             };
 
@@ -51,16 +52,16 @@ namespace Astride.Core.Scenes
                 {
                     blackHole.Update(in playerDis);
                 }
-                else
+                else if (e is AstroidEntity astroid)
                 {
-                    e.Update();
+                    astroid.Update(in playerPos, in playerDis);
                 }
             }
         }
         internal override void Render()
         {
             Raylib.BeginMode2D(cam);
-            Raylib.DrawTexture(background, 0, 0, Raylib.WHITE);
+            //Raylib.DrawTexture(background, 0, 0, Raylib.WHITE);
 
             foreach (var e in entityList)
             {

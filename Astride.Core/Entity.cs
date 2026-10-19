@@ -84,6 +84,10 @@ namespace Astride.Core
                 Raylib.DrawRectanglePro(dest, Vector2.Zero, 0f, Raylib.BLACK);
         }
 
-        internal abstract void onCollision(Entity e);
+        /// <summary>
+        /// Collision logic
+        /// </summary>
+        /// <param name="e">Entity Collided with</param>
+        internal abstract void OnCollision(params Entity[] entities);
     }
 }

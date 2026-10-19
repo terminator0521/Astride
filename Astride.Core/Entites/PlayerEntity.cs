@@ -1,5 +1,6 @@
 ﻿using Astride.Input;
 using System.Numerics;
+using System.Reflection.Metadata;
 using ZeroElectric.Vinculum;
 
 namespace Astride.Core.Entites
@@ -44,9 +45,12 @@ namespace Astride.Core.Entites
             base.Update();
         }
 
-        internal override void onCollision(Entity e)
+        internal override void OnCollision(params Entity[] entities)
         {
-            throw new NotImplementedException();
+            foreach (Entity e in entities)
+            {
+                
+            }
         }
     }
 }
