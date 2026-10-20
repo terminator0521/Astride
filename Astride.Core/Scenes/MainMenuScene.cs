@@ -1,5 +1,5 @@
 ﻿using ZeroElectric.Vinculum;
-
+using Astride.Core.Scenes.Endless;
 namespace Astride.Core.Scenes
 {
     internal class MainMenuScene : Scene
@@ -31,7 +31,7 @@ namespace Astride.Core.Scenes
         {
             if (NextScene == 1)
             {
-                return new FreeplayScene();
+                return new EndlessFreeplayScene();
             }
             return null;
         }

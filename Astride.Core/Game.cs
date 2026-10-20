@@ -28,9 +28,10 @@ namespace Astride.Core
             _scene.Update();
 
             //check for scene checks
-            if (_scene.SetNextScene() is not null)
+            var nextScene = _scene.SetNextScene();
+            if (nextScene is not null)
             {
-                _scene = _scene.SetNextScene();
+                _scene = nextScene;
             }
         }
         public void Render()

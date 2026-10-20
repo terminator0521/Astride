@@ -3,9 +3,9 @@ using Astride.Input;
 using System.Numerics;
 using ZeroElectric.Vinculum;
 
-namespace Astride.Core.Scenes
+namespace Astride.Core.Scenes.Endless
 {
-    internal class FreeplayScene : Scene
+    internal class EndlessFreeplayScene : Scene
     {
         Texture background = Raylib.LoadTexture("Assets/Backgrounds/Debug.png");
         Vector2 dis = new Vector2(0); //scene objects displacement based on player displacement
@@ -18,7 +18,7 @@ namespace Astride.Core.Scenes
 
         Vector2 playerDis;
 
-        public FreeplayScene()
+        public EndlessFreeplayScene()
         {
             cam = new Camera2D
             {
@@ -47,7 +47,7 @@ namespace Astride.Core.Scenes
                     InputUpdate(player);
                     player.Update(cam);
                     if (player.Health <= 0)
-                        NextScene = -1;
+                        NextScene = 1;
                 }
                 else if (e is BlackHoleEntity blackHole)
                 {
@@ -96,8 +96,8 @@ namespace Astride.Core.Scenes
 
             switch (NextScene)
             {
-                case -1:
-                    return new MainMenuScene();
+                case 1:
+                    return new EndlessGameOverScene();
                 default:
                     return null;
             }
