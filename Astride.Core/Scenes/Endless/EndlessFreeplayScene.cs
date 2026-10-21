@@ -34,7 +34,7 @@ namespace Astride.Core.Scenes.Endless
             {
                 new PlayerEndlessEntity(),
                 new AstroidEntity(new Vector2(300, 400)),
-                new BlackHoleEntity(_size, _cam)
+                //new BlackHoleEntity(_size, _cam)
             };
 
         }

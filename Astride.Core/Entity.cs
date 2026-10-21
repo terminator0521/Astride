@@ -83,15 +83,16 @@ namespace Astride.Core
             dest = new Rectangle(pos.X, pos.Y, width, height);
             src = new Rectangle(0f, 0f, width, height);
             origin = new Vector2(width / 2, height / 2);
+            displacement = Vector2.Zero;
         }
 
         /// <summary>
         /// Update logic. Only use frametime adjustments here
         /// </summary>
-        internal virtual void Update()
+        internal virtual void Update(float delta)
         {
             //update position    
-            pos += displacement * Raylib.GetFrameTime();
+            pos += displacement * delta;
 
             //update dest position
             dest.X = pos.X;

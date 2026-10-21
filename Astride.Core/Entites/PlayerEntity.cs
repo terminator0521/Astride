@@ -44,7 +44,7 @@ namespace Astride.Core.Entites
 
 
             //base updates
-            base.Update();
+            base.Update(Raylib.GetFrameTime());
         }
 
         internal override void OnCollision(params Entity[] entities)

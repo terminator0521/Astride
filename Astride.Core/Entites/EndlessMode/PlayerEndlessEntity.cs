@@ -11,7 +11,7 @@ namespace Astride.Core.Entites.EndlessMode
         private Camera2D _cam;
 
         //max player speed
-        private float _maxSpeed = 600f;
+        private float _maxSpeed = 500f;
 
         //player lives
         internal int Health { get; private set; }

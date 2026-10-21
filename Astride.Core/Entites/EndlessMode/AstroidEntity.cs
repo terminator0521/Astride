@@ -6,8 +6,10 @@ namespace Astride.Core.Entites.EndlessMode
 {
     internal class AstroidEntity : Entity
     {
-        public bool IsEnabled { get; private set; } = false;
+        internal bool IsEnabled { get; private set; } = false;
         private Vector2 _startPos;
+
+        private Vector2 _target;
         private static float[] s_respawnTime = { 1f, 2f, 3f };
         private float _currentWaitTime = 0;
 
@@ -23,8 +25,15 @@ namespace Astride.Core.Entites.EndlessMode
         {
             if (IsEnabled)
             {
-                displacement = Vector2.Normalize(displacement + -dis) * speed; //adjust displacement with speed and player relative displacement
-                base.Update();
+                _target -= dis * Raylib.GetFrameTime();
+
+                displacement = RayMath.Vector2Normalize((_target / Raylib.GetFrameTime()) - displacement) * speed * Raylib.GetFrameTime();
+                displacement -= dis * Raylib.GetFrameTime();
+
+                Console.WriteLine(displacement.Length());
+
+
+                base.Update(1);
             }
             else
             {
@@ -36,6 +45,7 @@ namespace Astride.Core.Entites.EndlessMode
                 {
                     pos = _startPos; //return to start pos
                     displacement = playerPos - _startPos; //head towards players last pos
+                    _target = playerPos - _startPos; //set start pos
                     _currentWaitTime = s_respawnTime[RandomNumberGenerator.GetInt32(3)]; //randomize respawn time
                     IsEnabled = true; //enable
                 }
