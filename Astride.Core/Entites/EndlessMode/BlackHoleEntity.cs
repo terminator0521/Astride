@@ -5,12 +5,11 @@ namespace Astride.Core.Entites.EndlessMode
 {
     internal class BlackHoleEntity : Entity
     {
-        private Vector2 _disToPlayer = new Vector2();
         public BlackHoleEntity(Vector2 gameSize, in Camera2D cam) : base()
         {
             speed = 300f;
             Vector2 startPos = Raylib.GetScreenToWorld2D(Vector2.Zero, cam);
-            dest = new Rectangle(startPos.X, startPos.Y, 0, gameSize.Y);
+            dest = new Rectangle(startPos.X, startPos.Y, 0, gameSize.Y * 2);
 
         }
 
@@ -18,6 +17,7 @@ namespace Astride.Core.Entites.EndlessMode
         {
             float change = speed - playerDisplacement.X;
             dest.Width += change * Raylib.GetFrameTime();
+            dest.Y += playerDisplacement.Y * Raylib.GetFrameTime();
         }
         internal override void Render()
         {
