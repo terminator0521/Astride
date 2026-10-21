@@ -28,13 +28,13 @@ namespace Astride.Core.Entites.EndlessMode
 
         internal PlayerEndlessEntity() : base(64, 64)
         {
-            speed = 25f;
+            speed = 100f;
             Health = 1;
         }
 
         public void InputUpdate()
         {
-            if (Raylib.IsMouseButtonDown(MouseButton.MOUSE_BUTTON_LEFT))
+            if (Raylib.IsMouseButtonPressed(MouseButton.MOUSE_BUTTON_LEFT))
             {
                 displacement += Vector2.Negate(Vector2.Normalize(Raylib.GetScreenToWorld2D(Raylib.GetMousePosition(), _cam) - CenterPos) * speed);
             }
@@ -48,10 +48,13 @@ namespace Astride.Core.Entites.EndlessMode
 
         internal new void Update(in Camera2D cam)
         {
+            Console.WriteLine(displacement);
             this._cam = cam;
 
             if (displacement.Length() > _maxSpeed)
-                displacement = Vector2.Normalize(displacement) * _maxSpeed;
+                displacement = RayMath.Vector2Normalize(displacement) * _maxSpeed;
+
+            base.Update(Raylib.GetFrameTime());
         }
 
         internal override void OnCollision(params Entity[] entities)

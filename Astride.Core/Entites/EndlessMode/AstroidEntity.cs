@@ -30,9 +30,6 @@ namespace Astride.Core.Entites.EndlessMode
                 displacement = RayMath.Vector2Normalize((_target / Raylib.GetFrameTime()) - displacement) * speed * Raylib.GetFrameTime();
                 displacement -= dis * Raylib.GetFrameTime();
 
-                Console.WriteLine(displacement.Length());
-
-
                 base.Update(1);
             }
             else

@@ -7,20 +7,24 @@ namespace Astride.Core.Scenes.Endless
 {
     internal class EndlessFreeplayScene : Scene
     {
-        Texture _background = Raylib.LoadTexture("Assets/Backgrounds/Debug.png");
 
+        //background things
+        Texture _background = Raylib.LoadTexture("Assets/Backgrounds/Debug.png");
         Vector2 _d1 = new Vector2(-1000, 0);
         Vector2 _d2 = new Vector2(1000, 0);
 
-        Vector2 _dis = new Vector2(0); //scene objects displacement based on player displacement
+        //scene priavte
         bool _isPaused;
-        List<Entity> _entityList;
+        Entity[] _entityList;
+        IInputHandler[] _inputHandler;
         Vector2 _size = new Vector2(1100, 720);
+
+        //player related references
+        Vector2 _dis = new Vector2(0); //scene objects displacement based on player displacement
         Camera2D _cam;
-
         Vector2 _playerPos;
-
         Vector2 _playerDis;
+        PlayerEndlessEntity _player = new PlayerEndlessEntity();
 
         public EndlessFreeplayScene()
         {
@@ -30,17 +34,23 @@ namespace Astride.Core.Scenes.Endless
                 rotation = 0,
                 zoom = 1
             };
-            _entityList = new List<Entity>
-            {
-                new PlayerEndlessEntity(),
+            _entityList =
+                [
+                _player,
                 new AstroidEntity(new Vector2(300, 400)),
-                //new BlackHoleEntity(_size, _cam)
-            };
+                new BlackHoleEntity(_size, _cam)
+                ];
+            _inputHandler =
+                [
+                _player
+                ];
 
         }
 
         internal override void Update()
         {
+            InputUpdate(_inputHandler);
+
             foreach (var e in _entityList)
             {
                 if (e is PlayerEndlessEntity player) //if player do player stuff (gurenteed)
@@ -48,7 +58,6 @@ namespace Astride.Core.Scenes.Endless
                     _cam.target = player.CenterPos;
                     _playerPos = player.CenterPos;
                     _playerDis = player.Displacement;
-                    InputUpdate(player);
                     player.Update(_cam);
                     if (player.Health <= 0)
                         NextScene = 1;
@@ -63,9 +72,9 @@ namespace Astride.Core.Scenes.Endless
                 }
             }
 
-            for (int i = 0; i < _entityList.Count; i++)
+            for (int i = 0; i < _entityList.Length; i++)
             {
-                for (int j = i + 1; j < _entityList.Count; j++)
+                for (int j = i + 1; j < _entityList.Length; j++)
                 {
                     if (Raylib.CheckCollisionRecs(_entityList[i].dest, _entityList[j].dest))
                     {
@@ -77,10 +86,8 @@ namespace Astride.Core.Scenes.Endless
             }
 
             //background
-            _d1.X += -_playerDis.X * Raylib.GetFrameTime();
-            _d1.Y += -_playerDis.Y * Raylib.GetFrameTime();
-            _d2.X += -_playerDis.X * Raylib.GetFrameTime();
-            _d2.Y += -_playerDis.Y * Raylib.GetFrameTime();
+            _d1 += -_playerDis * Raylib.GetFrameTime();
+            _d2 += -_playerDis * Raylib.GetFrameTime();
 
             if (_d1.X < -3000)
             {
@@ -123,12 +130,6 @@ namespace Astride.Core.Scenes.Endless
                 default:
                     return null;
             }
-        }
-
-        internal override void InputUpdate(params IInputHandler[] inputManagers)
-        {
-            foreach (var inputManager in inputManagers)
-                base.InputUpdate(inputManagers);
         }
     }
 }

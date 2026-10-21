@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq.Expressions;
-using System.Text;
-using ZeroElectric.Vinculum;
+﻿using ZeroElectric.Vinculum;
 
 namespace Astride.Core.Scenes.Endless
 {
@@ -19,14 +15,13 @@ namespace Astride.Core.Scenes.Endless
 
         internal override void Render()
         {
-            
+
         }
 
         internal override Scene SetNextScene()
         {
             if (Raylib.IsKeyPressed(KeyboardKey.KEY_BACKSPACE))
             {
-                Console.WriteLine("Reloaded Game Over Scene @: " + Raylib.GetTime());
                 return new EndlessGameOverScene();
             }
 
@@ -50,7 +45,7 @@ namespace Astride.Core.Scenes.Endless
             {
                 NextScene = 1;
             }
-            if(RayGui.GuiButton(new(650, 410, 300, 100), "Quit") == 1)
+            if (RayGui.GuiButton(new(650, 410, 300, 100), "Quit") == 1)
             {
                 NextScene = -1;
             }
