@@ -27,8 +27,6 @@ while (!Raylib.WindowShouldClose())
 
 #if DEBUG
     Raylib.DrawLine((int)game.dest.X + (int)game.dest.Width, (int)game.dest.Y, (int)game.dest.X + (int)game.dest.Width, (int)game.dest.Y + (int)game.dest.Height, Raylib.BLACK);
-    Raylib.DrawCircle(1100 / 2, 720 / 2, 10, Raylib.RED);
-    Raylib.DrawCircle(Raylib.GetScreenWidth() / 2, Raylib.GetScreenHeight() / 2, 10, Raylib.BLUE);
     Raylib.DrawText("FPS: " + Raylib.GetFPS(), 10, 10, 20, Raylib.BLACK);
     Raylib.DrawText("MousePos: " + Raylib.GetMousePosition(), 10, 30, 20, Raylib.BLACK);
 #endif

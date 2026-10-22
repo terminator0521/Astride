@@ -26,6 +26,8 @@ namespace Astride.Core
         /// </summary>
         internal Rectangle dest;
 
+        internal Rectangle HitBox { get; protected private set; }
+
         /// <summary>
         /// Rectangle used for parsing sprite.
         /// </summary>
@@ -66,9 +68,10 @@ namespace Astride.Core
         /// <param name="height">Size of entity</param>
         internal Entity(int width, int height)
         {
-            dest = new Rectangle(0f, 0f, width, height);
-            src = new Rectangle(0f, 0f, width, height);
             origin = new Vector2(width / 2, height / 2);
+            src = new Rectangle(0f, 0f, width, height);
+            dest = new Rectangle(0f, 0f, width, height);
+            HitBox = new Rectangle(dest.x + origin.X, dest.x + origin.Y, width, height);
         }
 
 
@@ -97,6 +100,13 @@ namespace Astride.Core
             //update dest position
             dest.X = pos.X;
             dest.Y = pos.Y;
+
+            //update hitbox pos
+            HitBox = HitBox with
+            {
+                X = dest.X + origin.X,
+                Y = dest.Y + origin.Y
+            };
         }
 
         /// <summary>

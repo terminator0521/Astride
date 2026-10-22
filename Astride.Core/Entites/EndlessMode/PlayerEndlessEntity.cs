@@ -43,7 +43,6 @@ namespace Astride.Core.Entites.EndlessMode
         internal override void Render()
         {
             base.Render();
-            Raylib.DrawLineEx(Raylib.GetScreenToWorld2D(Raylib.GetMousePosition(), _cam), CenterPos, 10, Raylib.RED);
         }
 
         internal new void Update(in Camera2D cam)
@@ -58,7 +57,6 @@ namespace Astride.Core.Entites.EndlessMode
 
         internal override void OnCollision(params Entity[] entities)
         {
-            Console.WriteLine("Player @: " + pos);
 
             foreach (Entity e in entities)
             {

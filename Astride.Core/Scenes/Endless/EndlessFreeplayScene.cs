@@ -8,11 +8,6 @@ namespace Astride.Core.Scenes.Endless
     internal class EndlessFreeplayScene : Scene
     {
 
-        //background things
-        Texture _background = Raylib.LoadTexture("Assets/Backgrounds/Debug.png");
-        Vector2 _d1 = new Vector2(-1000, 0);
-        Vector2 _d2 = new Vector2(1000, 0);
-
         //scene priavte
         bool _isPaused;
         Entity[] _entityList;
@@ -38,14 +33,20 @@ namespace Astride.Core.Scenes.Endless
             _entityList =
                 [
                 _player,
-                new AstroidEntity(new Vector2(300, 400)),
+                new AstroidEntity(new Vector2(1280, 100)),
+                new AstroidEntity(new Vector2(1280, 200)),
+                new AstroidEntity(new Vector2(1280, 300)),
+                new AstroidEntity(new Vector2(1280, -100)),
+                new AstroidEntity(new Vector2(1280, -200)),
+                new AstroidEntity(new Vector2(1280, -300)),
+                new AstroidEntity(new Vector2(1280, 0)),
                 new BlackHoleEntity(_size, _cam)
                 ];
             _inputHandler =
                 [
                 _player
                 ];
-            _camRect = new Rectangle(0 - _cam.offset.X + 32, 0 - _cam.offset.Y + 32, _size.X, _size.Y);
+            _camRect = new Rectangle(0 - _cam.offset.X + 32, 0 - _cam.offset.Y + 32, _size.X, _size.Y + 2000);
         }
 
         internal override void Update()
@@ -81,7 +82,7 @@ namespace Astride.Core.Scenes.Endless
             {
                 for (int j = i + 1; j < _entityList.Length; j++)
                 {
-                    if (Raylib.CheckCollisionRecs(_entityList[i].dest, _entityList[j].dest))
+                    if (Raylib.CheckCollisionRecs(_entityList[i].HitBox, _entityList[j].HitBox))
                     {
                         _entityList[i].OnCollision(_entityList[j]);
                         _entityList[j].OnCollision(_entityList[i]);
@@ -93,9 +94,6 @@ namespace Astride.Core.Scenes.Endless
         internal override void Render()
         {
             Raylib.BeginMode2D(_cam);
-
-            Raylib.DrawTextureV(_background, _d1, Raylib.WHITE);
-            Raylib.DrawTextureV(_background, _d2, Raylib.WHITE);
 
             foreach (var e in _entityList)
             {

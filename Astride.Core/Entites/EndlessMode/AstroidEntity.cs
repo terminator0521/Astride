@@ -8,11 +8,10 @@ namespace Astride.Core.Entites.EndlessMode
     {
         internal bool IsEnabled { get; private set; } = false;
         private Vector2 _startPos;
-
         private bool _canDestroy = false;
         private Vector2 _target;
         readonly private static float[] s_respawnTime = { 1f, 2f, 3f };
-        readonly private static float[] s_speeds = { 200f, 250f, 150f, 0f };
+        readonly private static float[] s_speeds = { 200f, 250f, 150f };
         private float _currentWaitTime = 0;
         private Rectangle _gameBounds;
 
@@ -31,18 +30,19 @@ namespace Astride.Core.Entites.EndlessMode
                 if (Raylib.CheckCollisionRecs(dest, bounds) && !_canDestroy)
                 {
                     _canDestroy = true;
-                    Console.WriteLine("in");
                 }
                 else if (!Raylib.CheckCollisionRecs(dest, bounds) && _canDestroy)
                 {
                     IsEnabled = false;
-                    Console.WriteLine("gone");
                 }
 
-                _target -= dis * Raylib.GetFrameTime();
+                _target -= dis * Raylib.GetFrameTime(); //target of for direction
 
-                displacement = RayMath.Vector2Normalize((_target / Raylib.GetFrameTime()) - displacement) * speed * Raylib.GetFrameTime();
-                displacement -= dis * Raylib.GetFrameTime();
+                displacement = RayMath.Vector2Normalize((_target / Raylib.GetFrameTime()) - displacement) * speed * Raylib.GetFrameTime(); // update displacement based on target
+                displacement -= (dis * Raylib.GetFrameTime()); //adjust displacement by player speed
+
+                //predict player's future pos
+                //displacement += displacement * Raylib.GetFrameTime();
 
                 base.Update(1f);
             }
@@ -56,8 +56,8 @@ namespace Astride.Core.Entites.EndlessMode
                 {
                     pos = playerPos + _startPos; //return to start pos
                     //(work on adjusting based on player vel)
-                    displacement = playerPos - _startPos + (playerPos + (dis / Raylib.GetFrameTime())); //head towards players last pos 
-                    _target = playerPos - _startPos; //set start pos
+                    displacement = playerPos - _startPos; //head towards players last pos 
+                    _target = (playerPos - pos); //set target
                     _currentWaitTime = RandomIndex(s_respawnTime); //randomize respawn time
                     speed = RandomIndex(in s_speeds); //choose speed
                     IsEnabled = true; //enable
@@ -73,13 +73,14 @@ namespace Astride.Core.Entites.EndlessMode
             {
                 base.Render();
             }
+            Raylib.DrawCircleV(_target, 10, Raylib.RED);
+            Console.WriteLine(_target);
         }
 
         internal override void OnCollision(params Entity[] entities)
         {
             if (IsEnabled)
             {
-                Console.WriteLine("Astroid @: " + pos);
                 foreach (var e in entities)
                 {
                     if (e is PlayerEndlessEntity)
