@@ -24,6 +24,7 @@ namespace Astride.Core.Scenes.Endless
         Camera2D _cam;
         Vector2 _playerPos;
         Vector2 _playerDis;
+        Rectangle _camRect;
         PlayerEndlessEntity _player = new PlayerEndlessEntity();
 
         public EndlessFreeplayScene()
@@ -44,12 +45,16 @@ namespace Astride.Core.Scenes.Endless
                 [
                 _player
                 ];
-
+            _camRect = new Rectangle(0 - _cam.offset.X + 32, 0 - _cam.offset.Y + 32, _size.X, _size.Y);
         }
 
         internal override void Update()
         {
             InputUpdate(_inputHandler);
+
+            //bounds
+            _camRect.X += _playerDis.X * Raylib.GetFrameTime();
+            _camRect.Y += _playerDis.Y * Raylib.GetFrameTime();
 
             foreach (var e in _entityList)
             {
@@ -68,7 +73,7 @@ namespace Astride.Core.Scenes.Endless
                 }
                 else if (e is AstroidEntity astroid)
                 {
-                    astroid.Update(in _playerPos, in _playerDis);
+                    astroid.Update(in _playerPos, in _playerDis, in _camRect);
                 }
             }
 
@@ -82,20 +87,6 @@ namespace Astride.Core.Scenes.Endless
                         _entityList[j].OnCollision(_entityList[i]);
                     }
                 }
-
-            }
-
-            //background
-            _d1 += -_playerDis * Raylib.GetFrameTime();
-            _d2 += -_playerDis * Raylib.GetFrameTime();
-
-            if (_d1.X < -3000)
-            {
-                _d1.X = 1000;
-            }
-            else if (_d2.X < -3000)
-            {
-                _d2.X = 1000;
             }
 
         }
@@ -110,6 +101,7 @@ namespace Astride.Core.Scenes.Endless
             {
                 e.Render();
             }
+            Raylib.DrawRectangleRec(_camRect, new Color(20, 50, 70, 60));
 
             Raylib.EndMode2D();
         }

@@ -99,6 +99,9 @@ namespace Astride.Core
             dest.Y = pos.Y;
         }
 
+        /// <summary>
+        /// Does gpu draw calls
+        /// </summary>
         internal virtual void Render()
         {
             if (Raylib.IsTextureReady(textureSource))
@@ -108,9 +111,9 @@ namespace Astride.Core
         }
 
         /// <summary>
-        /// Collision logic
+        /// Handle collision logic
         /// </summary>
-        /// <param name="entities">Entity(s) collided with</param>
+        /// <param name="entities">entity refences collided with</param>
         internal abstract void OnCollision(params Entity[] entities);
     }
 }

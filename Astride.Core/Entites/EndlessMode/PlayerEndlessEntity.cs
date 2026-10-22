@@ -10,8 +10,8 @@ namespace Astride.Core.Entites.EndlessMode
     {
         private Camera2D _cam;
 
-        //max player speed
-        private float _maxSpeed = 500f;
+        //player speeds
+        private float _speedA = 100f;
 
         //player lives
         internal int Health { get; private set; }
@@ -28,7 +28,7 @@ namespace Astride.Core.Entites.EndlessMode
 
         internal PlayerEndlessEntity() : base(64, 64)
         {
-            speed = 100f;
+            speed = 500f;
             Health = 1;
         }
 
@@ -36,7 +36,7 @@ namespace Astride.Core.Entites.EndlessMode
         {
             if (Raylib.IsMouseButtonPressed(MouseButton.MOUSE_BUTTON_LEFT))
             {
-                displacement += Vector2.Negate(Vector2.Normalize(Raylib.GetScreenToWorld2D(Raylib.GetMousePosition(), _cam) - CenterPos) * speed);
+                displacement += Vector2.Negate(Vector2.Normalize(Raylib.GetScreenToWorld2D(Raylib.GetMousePosition(), _cam) - CenterPos) * _speedA);
             }
         }
 
@@ -48,11 +48,10 @@ namespace Astride.Core.Entites.EndlessMode
 
         internal new void Update(in Camera2D cam)
         {
-            Console.WriteLine(displacement);
             this._cam = cam;
 
-            if (displacement.Length() > _maxSpeed)
-                displacement = RayMath.Vector2Normalize(displacement) * _maxSpeed;
+            if (displacement.Length() > speed)
+                displacement = RayMath.Vector2Normalize(displacement) * speed;
 
             base.Update(Raylib.GetFrameTime());
         }
