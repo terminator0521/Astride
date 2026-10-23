@@ -71,7 +71,7 @@ namespace Astride.Core
             origin = new Vector2(width / 2, height / 2);
             src = new Rectangle(0f, 0f, width, height);
             dest = new Rectangle(0f, 0f, width, height);
-            HitBox = new Rectangle(dest.x + origin.X, dest.x + origin.Y, width, height);
+            HitBox = new Rectangle(dest.X - origin.X, dest.Y - origin.Y, width, height);
         }
 
 
@@ -87,6 +87,7 @@ namespace Astride.Core
             src = new Rectangle(0f, 0f, width, height);
             origin = new Vector2(width / 2, height / 2);
             displacement = Vector2.Zero;
+            HitBox = new Rectangle(dest.X - origin.X, dest.Y - origin.Y, width, height);
         }
 
         /// <summary>
@@ -104,8 +105,8 @@ namespace Astride.Core
             //update hitbox pos
             HitBox = HitBox with
             {
-                X = dest.X + origin.X,
-                Y = dest.Y + origin.Y
+                X = dest.X - origin.X,
+                Y = dest.Y - origin.Y
             };
         }
 
@@ -119,7 +120,7 @@ namespace Astride.Core
             else
             {
                 Raylib.DrawRectanglePro(dest, origin, 0f, Raylib.BLACK);
-                Raylib.DrawRectanglePro(HitBox, Vector2.Zero, 0f, Raylib.RED);
+                //Raylib.DrawRectanglePro(HitBox, Vector2.Zero, 0f, Raylib.RED)
             }
 
         }

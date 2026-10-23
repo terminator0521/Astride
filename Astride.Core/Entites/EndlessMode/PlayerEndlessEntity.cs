@@ -26,7 +26,7 @@ namespace Astride.Core.Entites.EndlessMode
             }
         }
 
-        internal PlayerEndlessEntity() : base(64, 64)
+        internal PlayerEndlessEntity() : base(64, 64, new(0, 0))
         {
             speed = 300f;
             Health = 1;
@@ -61,11 +61,6 @@ namespace Astride.Core.Entites.EndlessMode
 
             foreach (Entity e in entities)
             {
-                if (e is not null)
-                {
-                    Console.WriteLine(e.GetType());
-                }
-
                 if (e is AstroidEntity)
                 {
                     Health--;

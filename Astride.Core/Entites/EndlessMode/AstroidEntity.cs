@@ -13,13 +13,11 @@ namespace Astride.Core.Entites.EndlessMode
         readonly private static float[] s_respawnTime = { 1f, 2f, 3f };
         readonly private static float[] s_speeds = { 100f, 200f, 150f };
         private float _currentWaitTime = 0;
-        private Rectangle _gameBounds;
 
-        internal AstroidEntity(in Vector2 startPos) : base(24, 24, new Vector2(600, 600))
+        internal AstroidEntity(in Vector2 startPos, in Vector2 playerPos) : base(24, 24, startPos + playerPos)
         {
-            _startPos = startPos;
-            pos = startPos;
-            pos = startPos;
+            _startPos = startPos + playerPos;
+            pos = _startPos;
             _currentWaitTime = 0;
             speed = RandomIndex(in s_speeds);
         }
