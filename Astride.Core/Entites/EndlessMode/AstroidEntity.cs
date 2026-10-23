@@ -16,7 +16,7 @@ namespace Astride.Core.Entites.EndlessMode
 
         internal AstroidEntity(in Vector2 startPos, in Vector2 playerPos) : base(24, 24, startPos + playerPos)
         {
-            _startPos = startPos + playerPos;
+            _startPos = startPos;
             pos = _startPos;
             _currentWaitTime = 0;
             speed = RandomIndex(in s_speeds);
@@ -24,8 +24,10 @@ namespace Astride.Core.Entites.EndlessMode
 
         internal new void Update(in Vector2 playerPos, in Vector2 dis, in Rectangle bounds)
         {
+            Console.WriteLine(playerPos.Y - pos.Y);
             if (IsEnabled)
             {
+
                 if (Raylib.CheckCollisionRecs(dest, bounds) && !_canDestroy)
                 {
                     _canDestroy = true;
@@ -38,10 +40,8 @@ namespace Astride.Core.Entites.EndlessMode
                 _target -= dis * Raylib.GetFrameTime(); //target of for direction
 
                 displacement = RayMath.Vector2Normalize((_target / Raylib.GetFrameTime()) - displacement) * speed * Raylib.GetFrameTime(); // update displacement based on target
-                displacement -= (dis * Raylib.GetFrameTime()); //adjust displacement by player speed
+                displacement -= dis * Raylib.GetFrameTime(); //adjust displacement by player speed
 
-                //predict player's future pos
-                //displacement += displacement * Raylib.GetFrameTime();
 
                 base.Update(1f);
             }
@@ -54,6 +54,7 @@ namespace Astride.Core.Entites.EndlessMode
                 else
                 {
                     pos = playerPos + _startPos; //return to start pos
+                    pos.Y -= (dis.Y * Raylib.GetFrameTime()); //adjust starting y pos based on player velocity
                     //(work on adjusting based on player vel)
                     displacement = playerPos - _startPos; //head towards players last pos 
                     _target = (playerPos - pos); //set target

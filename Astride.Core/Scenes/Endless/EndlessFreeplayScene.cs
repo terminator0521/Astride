@@ -33,13 +33,13 @@ namespace Astride.Core.Scenes.Endless
             _entityList =
                 [
                 _player,
-                new AstroidEntity(new Vector2(1280, 100), _player.CenterPos),
-                new AstroidEntity(new Vector2(1280, 200), _player.CenterPos),
-                new AstroidEntity(new Vector2(1280, 300), _player.CenterPos),
-                new AstroidEntity(new Vector2(1280, -100), _player.CenterPos),
-                new AstroidEntity(new Vector2(1280, -200), _player.CenterPos),
-                new AstroidEntity(new Vector2(1280, -300), _player.CenterPos),
-                new AstroidEntity(new Vector2(1280, 0), _player.CenterPos),
+                //new AstroidEntity(new Vector2(700, 100), _player.CenterPos),
+                //new AstroidEntity(new Vector2(700, 200), _player.CenterPos),
+                //new AstroidEntity(new Vector2(700, 300), _player.CenterPos),
+                //new AstroidEntity(new Vector2(700, -100), _player.CenterPos),
+                //new AstroidEntity(new Vector2(700, -200), _player.CenterPos),
+                //new AstroidEntity(new Vector2(700, -300), _player.CenterPos),
+                new AstroidEntity(new Vector2(700, 0), _player.CenterPos),
                 new BlackHoleEntity(_size, _cam)
                 ];
             _inputHandler =

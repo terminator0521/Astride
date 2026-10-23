@@ -28,7 +28,7 @@ namespace Astride.Core.Entites.EndlessMode
 
         internal PlayerEndlessEntity() : base(64, 64, new(0, 0))
         {
-            speed = 300f;
+            speed = 250f;
             Health = 1;
         }
 
@@ -48,6 +48,7 @@ namespace Astride.Core.Entites.EndlessMode
 
         internal new void Update(in Camera2D cam)
         {
+            Console.WriteLine(pos);
             this._cam = cam;
 
             if (displacement.Length() > speed)
