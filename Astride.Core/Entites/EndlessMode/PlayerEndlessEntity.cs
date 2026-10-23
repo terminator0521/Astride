@@ -11,7 +11,7 @@ namespace Astride.Core.Entites.EndlessMode
         private Camera2D _cam;
 
         //player speeds
-        private float _speedA = 100f;
+        private float _speedA = 75f;
 
         //player lives
         internal int Health { get; private set; }
@@ -28,7 +28,7 @@ namespace Astride.Core.Entites.EndlessMode
 
         internal PlayerEndlessEntity() : base(64, 64)
         {
-            speed = 500f;
+            speed = 300f;
             Health = 1;
         }
 
@@ -43,6 +43,7 @@ namespace Astride.Core.Entites.EndlessMode
         internal override void Render()
         {
             base.Render();
+            Raylib.DrawCircleV(pos, 10, Raylib.BLUE);
         }
 
         internal new void Update(in Camera2D cam)
@@ -60,6 +61,11 @@ namespace Astride.Core.Entites.EndlessMode
 
             foreach (Entity e in entities)
             {
+                if (e is not null)
+                {
+                    Console.WriteLine(e.GetType());
+                }
+
                 if (e is AstroidEntity)
                 {
                     Health--;

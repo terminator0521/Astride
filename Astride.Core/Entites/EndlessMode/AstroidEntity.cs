@@ -11,13 +11,14 @@ namespace Astride.Core.Entites.EndlessMode
         private bool _canDestroy = false;
         private Vector2 _target;
         readonly private static float[] s_respawnTime = { 1f, 2f, 3f };
-        readonly private static float[] s_speeds = { 200f, 250f, 150f };
+        readonly private static float[] s_speeds = { 100f, 200f, 150f };
         private float _currentWaitTime = 0;
         private Rectangle _gameBounds;
 
         internal AstroidEntity(in Vector2 startPos) : base(24, 24, new Vector2(600, 600))
         {
             _startPos = startPos;
+            pos = startPos;
             pos = startPos;
             _currentWaitTime = 0;
             speed = RandomIndex(in s_speeds);
@@ -73,8 +74,6 @@ namespace Astride.Core.Entites.EndlessMode
             {
                 base.Render();
             }
-            Raylib.DrawCircleV(_target, 10, Raylib.RED);
-            Console.WriteLine(_target);
         }
 
         internal override void OnCollision(params Entity[] entities)

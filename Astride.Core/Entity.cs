@@ -117,7 +117,11 @@ namespace Astride.Core
             if (Raylib.IsTextureReady(textureSource))
                 Raylib.DrawTexturePro(textureSource, src, dest, Vector2.Zero, 0f, Raylib.WHITE);
             else
-                Raylib.DrawRectanglePro(dest, Vector2.Zero, 0f, Raylib.BLACK);
+            {
+                Raylib.DrawRectanglePro(dest, origin, 0f, Raylib.BLACK);
+                Raylib.DrawRectanglePro(HitBox, Vector2.Zero, 0f, Raylib.RED);
+            }
+
         }
 
         /// <summary>
