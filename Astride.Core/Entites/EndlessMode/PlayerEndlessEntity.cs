@@ -48,7 +48,6 @@ namespace Astride.Core.Entites.EndlessMode
 
         internal new void Update(in Camera2D cam)
         {
-            Console.WriteLine(pos);
             this._cam = cam;
 
             if (displacement.Length() > speed)

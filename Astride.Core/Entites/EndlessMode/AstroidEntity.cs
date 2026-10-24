@@ -24,7 +24,6 @@ namespace Astride.Core.Entites.EndlessMode
 
         internal new void Update(in Vector2 playerPos, in Vector2 dis, in Rectangle bounds)
         {
-            Console.WriteLine(playerPos.Y - pos.Y);
             if (IsEnabled)
             {
 
