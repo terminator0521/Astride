@@ -20,7 +20,7 @@ namespace Astride.Core
         {
             get
             {
-                return pos + origin;
+                return pos - origin;
             }
         }
 
@@ -34,6 +34,9 @@ namespace Astride.Core
         /// </summary>
         internal Rectangle dest;
 
+        /// <summary>
+        /// actual hitbox of entity
+        /// </summary>
         internal Rectangle HitBox { get; protected private set; }
 
         /// <summary>
@@ -65,6 +68,14 @@ namespace Astride.Core
         /// displacement vector used to update position per frame
         /// </summary>
         protected Vector2 displacement = Vector2.Zero;
+
+        protected float Radius
+        {
+            get
+            {
+                return (textureSource.height + textureSource.width) / 2f;
+            }
+        }
 
         /// <summary>
         /// Construct with undeclared pos and size

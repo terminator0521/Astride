@@ -45,16 +45,20 @@ namespace Astride.Core.Entites.EndlessMode
                 //change player velocity with speed towards opposite direction of mouse
                 displacement += Vector2.Negate(Vector2.Normalize(Raylib.GetScreenToWorld2D(Raylib.GetMousePosition(), _cam) - CenterPos) * _speedA); 
             }
+
         }
 
         internal override void Render()
         {
+
             base.Render(); //render texture
+            Raylib.DrawCircleV(Raylib.GetScreenToWorld2D(Raylib.GetMousePosition(), _cam), 5, Raylib.RED); //draw red dot on player mouse pos
         }
 
         internal new void Update(in Camera2D cam)
         {
             this._cam = cam; //update player instance camera
+            angle = RayMath.Vector2LineAngle(pos, Raylib.GetScreenToWorld2D(Raylib.GetMousePosition(), cam)) * -RayMath.RAD2DEG - 90; //set angle
 
             //limit speed to max speed
             if (displacement.Length() > speed)

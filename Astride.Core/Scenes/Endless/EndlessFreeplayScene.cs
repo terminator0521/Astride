@@ -138,7 +138,7 @@ namespace Astride.Core.Scenes.Endless
                 {
                     for (int j = i + 1; j < _entityList.Length; j++)
                     {
-                        if (Raylib.CheckCollisionRecs(_entityList[i].HitBox, _entityList[j].HitBox))
+                        if (Raylib.CheckCollisionRecs(_entityList[i].HitBox, _entityList[j].HitBox)) //Box collision detection
                         {
                             //run collision logic
                             _entityList[i].OnCollision(_entityList[j]);
