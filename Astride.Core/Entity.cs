@@ -5,6 +5,8 @@ namespace Astride.Core
 {
     internal abstract class Entity : IDisposable
     {
+        internal bool IsEnabled { get; private protected set; } = false; //if astroid is enabled
+
         protected AudioStream[] soundEffect;
 
 

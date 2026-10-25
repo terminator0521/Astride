@@ -7,7 +7,6 @@ namespace Astride.Core.Entites.EndlessMode
 {
     internal class AstroidEntity : Entity
     {
-        internal bool IsEnabled { get; private set; } = false; //if astroid is enabled
         private Vector2 _offset; //start position offset from player
         private Vector2 _disAdj; //displacement adjustment;
         private bool _canDestroy = false; //can be destroyed
