@@ -58,7 +58,6 @@ namespace Astride.Core.Entites.EndlessMode
                     if ((float)Random.Shared.Next(64) % 2 == 0) // 50/50 chance of spawning
                     {
                         pos = playerPos + _startPosOffset; //reset pos
-                        Console.WriteLine(pos);
                         IsEnabled = true; //enable
                         _canDestroy = false; //disable can destroy
                         displacement *= speed; //change displacement by factor of speed

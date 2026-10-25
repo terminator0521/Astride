@@ -1,4 +1,5 @@
 ﻿using Astride.Input;
+using System.Data.Common;
 using System.Numerics;
 using ZeroElectric.Vinculum;
 
@@ -27,6 +28,9 @@ namespace Astride.Core.Entites.EndlessMode
             }
         }
 
+        //player projectile
+        internal ProjectileEntity proj;
+
         /// <summary>
         /// Create a player
         /// </summary>
@@ -35,15 +39,20 @@ namespace Astride.Core.Entites.EndlessMode
             speed = 250f; //set player max speed
             Health = 1; //set player health
             UpdateTexture("Assets/Textures/Player.png"); //init player texture and texture parsing rect
+            proj = new ProjectileEntity(24f); //init projectile
+
         }
 
         public void InputUpdate()
         {
-            //on LMB clicked
-            if (Raylib.IsMouseButtonPressed(MouseButton.MOUSE_BUTTON_LEFT))
+            //on LMB clicked & projectile is disabled
+            if (Raylib.IsMouseButtonPressed(MouseButton.MOUSE_BUTTON_LEFT) && !proj.IsEnabled)
             {
+                //shoot projectile
+                proj.Shoot(Raylib.GetScreenToWorld2D(Raylib.GetMousePosition(), _cam) - pos, pos);
+
                 //change player velocity with speed towards opposite direction of mouse
-                displacement += Vector2.Negate(Vector2.Normalize(Raylib.GetScreenToWorld2D(Raylib.GetMousePosition(), _cam) - CenterPos) * _speedA); 
+                displacement += Vector2.Negate(Vector2.Normalize(Raylib.GetScreenToWorld2D(Raylib.GetMousePosition(), _cam) - CenterPos) * _speedA);
             }
 
         }
@@ -57,6 +66,9 @@ namespace Astride.Core.Entites.EndlessMode
 
         internal new void Update(in Camera2D cam)
         {
+            //add 5 to score if project hits an astroid
+            Score += proj.HitAstroid ? 5 : 0;
+
             this._cam = cam; //update player instance camera
             angle = RayMath.Vector2LineAngle(pos, Raylib.GetScreenToWorld2D(Raylib.GetMousePosition(), cam)) * -RayMath.RAD2DEG - 90; //set angle
 
@@ -64,12 +76,14 @@ namespace Astride.Core.Entites.EndlessMode
             if (displacement.Length() > speed)
                 displacement = RayMath.Vector2Normalize(displacement) * speed;
 
+            //update projectile
+
             base.Update(Raylib.GetFrameTime()); //run parent updates at deltatime
         }
 
         internal override void OnCollision(Entity e)
         {
-            if (e is AstroidEntity) //remove health by one if collided with astroid
+            if (e is AstroidEntity) //remove health by one if collided with enabled astroid
             {
                 Health--;
             }

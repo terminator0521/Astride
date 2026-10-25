@@ -44,7 +44,7 @@ namespace Astride.Core.Scenes.Endless
             {
                 offset = new Vector2(_size.X / 2, _size.Y / 2), //set offset
                 rotation = 0, //set rotation 
-                zoom = 1
+                zoom = 1 //set zoom
             };
 
             //set background positions
@@ -76,8 +76,11 @@ namespace Astride.Core.Scenes.Endless
                 //add player
                 _player,
 
+                //add player projectile
+                _player.proj,
+
                 //add blackhole
-                new BlackHoleEntity(_size, _cam),
+                //new BlackHoleEntity(_size, _cam),
 
                 ];
 
@@ -89,7 +92,7 @@ namespace Astride.Core.Scenes.Endless
                 ];
 
             //init camera rectangle
-            _camRect = new Rectangle(0 - _cam.offset.X + 32, 0 - _cam.offset.Y + 32, _size.X, _size.Y + 2000);
+            _camRect = new Rectangle(0 - _cam.offset.X + 32, 0 - _cam.offset.Y + 32, _size.X, _size.Y);
         }
 
         internal override void Update()
@@ -134,6 +137,10 @@ namespace Astride.Core.Scenes.Endless
                     } else if (e is AstronautEntity astronaut)
                     {
                         astronaut.Update(_playerPos, _camRect);
+                    }
+                    else if (e is ProjectileEntity proj)
+                    {
+                        proj.Update(Raylib.GetFrameTime(), _camRect);
                     }
                 }
 

@@ -58,6 +58,7 @@ namespace Astride.Core.Entites.EndlessMode
             }
             else //if astroid is disabled
             {
+                pos = new Vector2(-7000);
                 if (_currentWaitTime > 0) //if still waiting
                 {
                     _currentWaitTime -= Raylib.GetFrameTime(); //subtract wait time by frame time
@@ -92,9 +93,14 @@ namespace Astride.Core.Entites.EndlessMode
         {
             if (IsEnabled) //if enabled
             {
+                //disable if collided with player, blackhole
                 if (e is PlayerEndlessEntity || e is BlackHoleEntity)
                 {
-                    IsEnabled = false; //disable on collided with player
+                    IsEnabled = false; 
+                }
+                else if (e is ProjectileEntity && e.IsEnabled) //disable if collided with enabled projectile
+                {
+                    IsEnabled = false;
                 }
             }
         }
