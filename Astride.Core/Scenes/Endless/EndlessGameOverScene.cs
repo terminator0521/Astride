@@ -4,50 +4,51 @@ namespace Astride.Core.Scenes.Endless
 {
     internal class EndlessGameOverScene : Scene
     {
+        /// <summary>
+        /// Create game over scene
+        /// </summary>
         internal EndlessGameOverScene() : base()
         {
-
         }
 
         internal override void Update()
         {
+            //no logic
         }
 
         internal override void Render()
         {
-
+            //no logic
         }
 
         internal override Scene SetNextScene()
         {
-            if (Raylib.IsKeyPressed(KeyboardKey.KEY_BACKSPACE))
-            {
-                return new EndlessGameOverScene();
-            }
-
             switch (NextScene)
             {
                 case 1:
-                    return new EndlessFreeplayScene();
+                    return new EndlessFreeplayScene(); //start new endless freeplay mode
                 case -1:
-                    return new MainMenuScene();
+                    return new MainMenuScene(); //go back to main menu
                 default:
-                    return null;
+                    return null; //don't change scene
             }
         }
 
         internal override void UI()
         {
+            //print gameover text
             RayGui.GuiSetStyle((int)GuiControl.DEFAULT, (int)GuiDefaultProperty.TEXT_SIZE, 70);
             RayGui.GuiLabel(new(490, 100, 300, 70), "Game Over");
+
+            //draw retry and quit buttons
             RayGui.GuiSetStyle((int)GuiControl.DEFAULT, (int)GuiDefaultProperty.TEXT_SIZE, 40);
             if (RayGui.GuiButton(new(330, 410, 300, 100), "Retry") == 1)
             {
-                NextScene = 1;
+                NextScene = 1; //set next scene to endless freeplay mode
             }
             if (RayGui.GuiButton(new(650, 410, 300, 100), "Quit") == 1)
             {
-                NextScene = -1;
+                NextScene = -1; //set next scene to main menu
             }
         }
     }

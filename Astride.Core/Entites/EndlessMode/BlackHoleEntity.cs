@@ -6,6 +6,11 @@ namespace Astride.Core.Entites.EndlessMode
 
     internal class BlackHoleEntity : Entity
     {
+        /// <summary>
+        /// create a blackhole entity
+        /// </summary>
+        /// <param name="gameSize"></param>
+        /// <param name="cam"></param>
         public BlackHoleEntity(Vector2 gameSize, in Camera2D cam) : base(0, (int)gameSize.Y * 3, Raylib.GetScreenToWorld2D(Vector2.Zero, cam))
         {
             speed = 420f;
@@ -13,12 +18,23 @@ namespace Astride.Core.Entites.EndlessMode
             pos.X -= gameSize.Y * 1.5f;
         }
 
+        internal override void OnCollision(Entity e)
+        {
+            //no collision logic
+        }
+
+        /// <summary>
+        /// get player displacement over time
+        /// </summary>
+        /// <param name="playerDisplacement">player's displacement over time</param>
         internal new void Update(in Vector2 playerDisplacement)
         {
-            float change = speed - playerDisplacement.X;
-            dest.Width += change * Raylib.GetFrameTime(); // change width over time
+            float change = speed - playerDisplacement.X; //set change based on change rate and player velocity
+            dest.Width += change * Raylib.GetFrameTime(); // change width over time 
             dest.Y += playerDisplacement.Y * Raylib.GetFrameTime(); //maintain same Y level as player
             HitBox = dest; //sync hitbox with dest 
+
+            //update hitbox
             HitBox = HitBox with
             {
                 X = dest.X - origin.X,
@@ -26,15 +42,6 @@ namespace Astride.Core.Entites.EndlessMode
                 Width = dest.Width,
                 Height = dest.Height
             };
-        }
-        internal override void Render()
-        {
-            base.Render();
-        }
-
-        internal override void OnCollision(params Entity[] entities)
-        {
-
         }
     }
 }

@@ -3,8 +3,11 @@ using ZeroElectric.Vinculum;
 
 namespace Astride.Core
 {
-    internal abstract class Entity
+    internal abstract class Entity : IDisposable
     {
+        protected AudioStream[] soundEffect;
+
+
         /// <summary>
         /// Returns real position with origin adjustment
         /// </summary>
@@ -37,6 +40,11 @@ namespace Astride.Core
         /// Sprite or spritesheet of your texture.
         /// </summary>
         protected Texture textureSource;
+
+        /// <summary>
+        /// Represents the angle value in degrees or radians.
+        /// </summary>
+        protected float angle;
 
         /// <summary>
         /// Center position
@@ -115,20 +123,49 @@ namespace Astride.Core
         /// </summary>
         internal virtual void Render()
         {
+            //check if texture is loaded
             if (Raylib.IsTextureReady(textureSource))
-                Raylib.DrawTexturePro(textureSource, src, dest, Vector2.Zero, 0f, Raylib.WHITE);
+                //draw texture
+                Raylib.DrawTexturePro(textureSource, src, dest, origin, angle, Raylib.WHITE);
             else
-            {
+                //draw placeholder rectangle
                 Raylib.DrawRectanglePro(dest, origin, 0f, Raylib.BLACK);
-                //Raylib.DrawRectanglePro(HitBox, Vector2.Zero, 0f, Raylib.RED)
-            }
-
         }
 
         /// <summary>
         /// Handle collision logic
         /// </summary>
-        /// <param name="entities">entity refences collided with</param>
-        internal abstract void OnCollision(params Entity[] entities);
+        /// <param name="e">reference of entity object collided with</param>
+        internal abstract void OnCollision(Entity e);
+
+        /// <summary>
+        /// Initializes entity texture
+        /// </summary>
+        /// <param name="texturePath">Path of texture</param>
+        protected void UpdateTexture(string texturePath)
+        {
+            //load texture to vram
+            textureSource = Raylib.LoadTexture(texturePath);
+
+            //init parsing rectangle
+            src = new Rectangle(0, 0, textureSource.width, textureSource.height);
+        }
+
+        public void Dispose()
+        {
+            //unload texture
+            Raylib.UnloadTexture(textureSource);
+
+            //check if soundEffect array is null or empty
+            if (soundEffect.Length != 0 || soundEffect is not null)
+            {
+                //delete each sound effect
+                for (int i = 0; i < soundEffect.Length; i++)
+                {
+                    Raylib.UnloadAudioStream(soundEffect[i]);
+                }
+                soundEffect = null; //empty container reference
+            }
+        }
     }
 }

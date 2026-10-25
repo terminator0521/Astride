@@ -35,12 +35,12 @@ namespace Astride.Core
         /// <summary>
         /// Handles inputs. Must call in Update().
         /// </summary>
-        /// <param name="inputManagers"></param> Singular object that inherit the IInputHandler interface.
+        /// <param name="inputManagers">update input handelers in scene.</param> 
         virtual internal void InputUpdate(IInputHandler[] inputManagers)
         {
             foreach (var inputManager in inputManagers)
             {
-                inputManager.InputUpdate();
+                inputManager.InputUpdate(); //update 
             }
         }
     }

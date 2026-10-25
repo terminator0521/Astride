@@ -8,10 +8,12 @@ namespace Astride.Core.Entites.EndlessMode
 
     internal class PlayerEndlessEntity : Entity, IInputHandler
     {
+        
+        //scene camera reference
         private Camera2D _cam;
 
         //player speeds
-        private float _speedA = 75f;
+        private float _speedA = 75f; //set player velocity increase per click
 
         //player lives
         internal int Health { get; private set; }
@@ -26,49 +28,51 @@ namespace Astride.Core.Entites.EndlessMode
             }
         }
 
+        /// <summary>
+        /// Create a player
+        /// </summary>
         internal PlayerEndlessEntity() : base(64, 64, new(0, 0))
         {
-            speed = 250f;
-            Health = 1;
+            speed = 250f; //set player max speed
+            Health = 1; //set player health
+            UpdateTexture("Assets/Textures/Player.png"); //init player texture and texture parsing rect
         }
 
         public void InputUpdate()
         {
+            //on LMB clicked
             if (Raylib.IsMouseButtonPressed(MouseButton.MOUSE_BUTTON_LEFT))
             {
-                displacement += Vector2.Negate(Vector2.Normalize(Raylib.GetScreenToWorld2D(Raylib.GetMousePosition(), _cam) - CenterPos) * _speedA);
+                //change player velocity with speed towards opposite direction of mouse
+                displacement += Vector2.Negate(Vector2.Normalize(Raylib.GetScreenToWorld2D(Raylib.GetMousePosition(), _cam) - CenterPos) * _speedA); 
             }
         }
 
         internal override void Render()
         {
-            base.Render();
-            Raylib.DrawCircleV(pos, 10, Raylib.BLUE);
+            base.Render(); //render texture
         }
 
         internal new void Update(in Camera2D cam)
         {
-            this._cam = cam;
+            this._cam = cam; //update player instance camera
 
+            //limit speed to max speed
             if (displacement.Length() > speed)
                 displacement = RayMath.Vector2Normalize(displacement) * speed;
 
-            base.Update(Raylib.GetFrameTime());
+            base.Update(Raylib.GetFrameTime()); //run parent updates at deltatime
         }
 
-        internal override void OnCollision(params Entity[] entities)
+        internal override void OnCollision(Entity e)
         {
-
-            foreach (Entity e in entities)
+            if (e is AstroidEntity) //remove health by one if collided with astroid
             {
-                if (e is AstroidEntity)
-                {
-                    Health--;
-                }
-                else if (e is BlackHoleEntity)
-                {
-                    Health = 0;
-                }
+                Health--;
+            }
+            else if (e is BlackHoleEntity) //instant dealth when collided with blackhole
+            {
+                Health = 0;
             }
         }
     }
