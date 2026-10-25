@@ -13,7 +13,7 @@ namespace Astride.Core.Entites.EndlessMode
         /// <param name="cam"></param>
         public BlackHoleEntity(Vector2 gameSize, in Camera2D cam) : base(0, (int)gameSize.Y * 3, Raylib.GetScreenToWorld2D(Vector2.Zero, cam))
         {
-            speed = 420f;
+            speed = 380f;
             //adjust dest and hitbox y pos manually
             pos.X -= gameSize.Y * 1.5f;
         }

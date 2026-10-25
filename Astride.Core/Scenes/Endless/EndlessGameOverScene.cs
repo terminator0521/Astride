@@ -4,14 +4,17 @@ namespace Astride.Core.Scenes.Endless
 {
     internal class EndlessGameOverScene : Scene
     {
-        private int _finalScore;
+        private int _time;
+        private int _finalScore; //final score
 
         /// <summary>
         /// Create game over scene
         /// </summary>
-        internal EndlessGameOverScene(int score) : base()
+        internal EndlessGameOverScene(int score, int time) : base()
         {
-            _finalScore = score;
+            _finalScore = score; //set final score
+            _time = time; //set final time
+
         }
 
         internal override void Update()
@@ -43,8 +46,9 @@ namespace Astride.Core.Scenes.Endless
             RayGui.GuiSetStyle((int)GuiControl.DEFAULT, (int)GuiDefaultProperty.TEXT_SIZE, 70);
             RayGui.GuiLabel(new(490, 100, 300, 70), "Game Over");
 
-            //draw final score
+            //draw final score and time
             RayGui.GuiLabel(new(410, 200, 340, 70), $"Score: {_finalScore}");
+            RayGui.GuiLabel(new(410, 200, 340, 70), $"Time: {_time}s");
 
             //draw retry and quit buttons
             RayGui.GuiSetStyle((int)GuiControl.DEFAULT, (int)GuiDefaultProperty.TEXT_SIZE, 40);

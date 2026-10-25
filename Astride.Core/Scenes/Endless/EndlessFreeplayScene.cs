@@ -248,7 +248,7 @@ namespace Astride.Core.Scenes.Endless
             {
                 case 1:
                     Dispose(); //dispose unmanaged resources
-                    return new EndlessGameOverScene(_player.Score); //go to game over screen
+                    return new EndlessGameOverScene(_player.Score, (int)_time); //go to game over screen
                 default:
                     return null; //don't change scenes
             }
