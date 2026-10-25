@@ -5,7 +5,7 @@ using ZeroElectric.Vinculum;
 
 namespace Astride.Core.Scenes.Endless
 {
-    internal class EndlessFreeplayScene : Scene
+    internal class EndlessFreeplayScene : Scene, IDisposable
     {
         //load background
         Texture _background = Raylib.LoadTexture("Assets/Backgrounds/Debug.png");
@@ -59,20 +59,24 @@ namespace Astride.Core.Scenes.Endless
 
             _entityList =
                 [
-                //add player
-                _player,
-
                 //add astroids
                 new AstroidEntity(new Vector2(700, 100), _player.CenterPos),
-                new AstroidEntity(new Vector2(700, 200), _player.CenterPos),
                 new AstroidEntity(new Vector2(700, 300), _player.CenterPos),
                 new AstroidEntity(new Vector2(700, -100), _player.CenterPos),
-                new AstroidEntity(new Vector2(700, -200), _player.CenterPos),
                 new AstroidEntity(new Vector2(700, -300), _player.CenterPos),
                 new AstroidEntity(new Vector2(700, 0), _player.CenterPos),
 
+                //add astronauts
+                new AstronautEntity(new Vector2(700, 0), _player.CenterPos),
+                new AstronautEntity(new Vector2(700, 250), _player.CenterPos),
+                new AstronautEntity(new Vector2(700, -250), _player.CenterPos),
+                
+                //add player
+                _player,
+
                 //add blackhole
-                //new BlackHoleEntity(_size, _cam)
+                new BlackHoleEntity(_size, _cam),
+
                 ];
 
             //array of input handler
@@ -123,6 +127,9 @@ namespace Astride.Core.Scenes.Endless
                     {
                         //update astroids
                         astroid.Update(in _playerPos, in _playerDis, in _camRect);
+                    } else if (e is AstronautEntity astronaut)
+                    {
+                        astronaut.Update(_playerPos, _camRect);
                     }
                 }
 
@@ -155,11 +162,13 @@ namespace Astride.Core.Scenes.Endless
                                 _bgPos[i, j].X = _cam.target.X - _cam.offset.X + _background.width - 64f;
                             }
 
+                            //reset background posiitons that are offscreen above
                             if (_bgPos[i, j].Y < _cam.target.Y - _cam.offset.Y - _background.height)
                             {
                                 _bgPos[i, j].Y += _background.height * 2;
                             }
 
+                            //reset background posiitons that are offscreen below
                             if (_bgPos[i, j].Y > _cam.target.Y - _cam.offset.Y + _background.height)
                             {
                                 _bgPos[i, j].Y -= _background.height * 2;
@@ -218,10 +227,9 @@ namespace Astride.Core.Scenes.Endless
         {
             switch (NextScene)
             {
-                case -1:
-                    return new MainMenuScene(); //return to main menu
                 case 1:
-                    return new EndlessGameOverScene(); //go to game over screen
+                    Dispose(); //dispose unmanaged resources
+                    return new EndlessGameOverScene(_player.Score); //go to game over screen
                 default:
                     return null; //don't change scenes
             }
@@ -234,6 +242,14 @@ namespace Astride.Core.Scenes.Endless
 
             //update input managed objects (inputHhandler's)
             base.InputUpdate(inputManagers);
+        }
+
+        public void Dispose()
+        {
+            foreach (var e in _entityList)
+            {
+                e.Dispose(); //dispose unmanaged resources like sprites and audio from all entities
+            }
         }
     }
 }

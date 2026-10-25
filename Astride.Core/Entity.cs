@@ -7,8 +7,11 @@ namespace Astride.Core
     {
         internal bool IsEnabled { get; private protected set; } = false; //if astroid is enabled
 
-        protected AudioStream[] soundEffect;
+        //array of sound effects
+        protected AudioStream[]? soundEffect;
 
+        //number of entities that have been initiated
+        internal static int s_instances = 0;
 
         /// <summary>
         /// Returns real position with origin adjustment
@@ -68,7 +71,7 @@ namespace Astride.Core
         /// </summary>
         internal Entity()
         {
-
+            s_instances++;
         }
 
         /// <summary>
@@ -78,6 +81,7 @@ namespace Astride.Core
         /// <param name="height">Size of entity</param>
         internal Entity(int width, int height)
         {
+            s_instances++;
             origin = new Vector2(width / 2, height / 2);
             src = new Rectangle(0f, 0f, width, height);
             dest = new Rectangle(0f, 0f, width, height);
@@ -93,6 +97,7 @@ namespace Astride.Core
         /// <param name="pos">Position of entity</param>
         internal Entity(int width, int height, Vector2 pos)
         {
+            s_instances++;
             dest = new Rectangle(pos.X, pos.Y, width, height);
             src = new Rectangle(0f, 0f, width, height);
             origin = new Vector2(width / 2, height / 2);
@@ -160,15 +165,30 @@ namespace Astride.Core
             Raylib.UnloadTexture(textureSource);
 
             //check if soundEffect array is null or empty
-            if (soundEffect.Length != 0 || soundEffect is not null)
+            if (soundEffect?.Length != 0)
             {
                 //delete each sound effect
-                for (int i = 0; i < soundEffect.Length; i++)
+                for (int i = 0; i < soundEffect?.Length; i++)
                 {
                     Raylib.UnloadAudioStream(soundEffect[i]);
                 }
-                soundEffect = null; //empty container reference
             }
+            //nullify container reference
+            soundEffect = null;
+
+            //subtract one from total instances created
+            s_instances--;
+        }
+
+        /// <summary>
+        /// Returns a random index number of an array
+        /// </summary>
+        /// <typeparam name="A">Array type</typeparam>
+        /// <param name="array">Array refernce</param>
+        /// <returns></returns>
+        protected A RandomIndex<A>(in A[] array)
+        {
+            return array[Random.Shared.Next(array.Length)]; //return random index in given array
         }
     }
 }

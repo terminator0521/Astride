@@ -8,7 +8,6 @@ namespace Astride.Core.Entites.EndlessMode
     internal class AstroidEntity : Entity
     {
         private Vector2 _offset; //start position offset from player
-        private Vector2 _disAdj; //displacement adjustment;
         private bool _canDestroy = false; //can be destroyed
         readonly private static float[] s_respawnTime = {2f}; //respawn times
         readonly private static float[] s_speeds = { 200f, 175f, 150f}; //travelling speeds
@@ -73,9 +72,7 @@ namespace Astride.Core.Entites.EndlessMode
 
                     displacement = -RayMath.Vector2Normalize(_offset); //get direction to player 
                     displacement += RayMath.Vector2Normalize(RandomIndex(s_disAdjustments)); //adjust with random direction
-                    Console.WriteLine(displacement);
                     displacement *= speed; //change displacement by factor of speed
-                    Console.WriteLine(displacement);
 
                 }
             }
@@ -102,15 +99,5 @@ namespace Astride.Core.Entites.EndlessMode
             }
         }
 
-        /// <summary>
-        /// Returns a random index number of an array
-        /// </summary>
-        /// <typeparam name="A">Array type</typeparam>
-        /// <param name="array">Array refernce</param>
-        /// <returns></returns>
-        private A RandomIndex<A>(in A[] array)
-        {
-            return array[Random.Shared.Next(array.Length)]; //return random index in given array
-        }
     }
 }

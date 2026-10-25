@@ -4,11 +4,11 @@ using ZeroElectric.Vinculum;
 
 namespace Astride.Core.Entites.EndlessMode
 {
-
-
     internal class PlayerEndlessEntity : Entity, IInputHandler
     {
-        
+        //player score
+        internal int Score { get; private set; }
+
         //scene camera reference
         private Camera2D _cam;
 
@@ -17,7 +17,6 @@ namespace Astride.Core.Entites.EndlessMode
 
         //player lives
         internal int Health { get; private set; }
-
 
         //player displacement getter for scene
         internal Vector2 Displacement
@@ -68,11 +67,15 @@ namespace Astride.Core.Entites.EndlessMode
         {
             if (e is AstroidEntity) //remove health by one if collided with astroid
             {
-                //Health--;
+                Health--;
             }
             else if (e is BlackHoleEntity) //instant dealth when collided with blackhole
             {
                 Health = 0;
+            }
+            else if (e is AstronautEntity)
+            {
+                Score += 10;
             }
         }
     }
