@@ -20,7 +20,9 @@ namespace Astride.Core.Scenes.Endless
         };
 
         //scene priavte
-        bool _isPaused; //pause menu active bool
+
+        private float _time = 0f;
+        private bool _isPaused; //pause menu active bool
         private Entity[] _entityList; //array of entity references
         private IInputHandler[] _inputHandler; //array of inputhandler references (objects that handle inputs)
         private Vector2 _size = new Vector2(1100, 720); //size of render area
@@ -92,6 +94,8 @@ namespace Astride.Core.Scenes.Endless
 
         internal override void Update()
         {
+            _time += Raylib.GetFrameTime();
+
             //update objects that are input handlers
             InputUpdate(_inputHandler);
 
@@ -201,6 +205,14 @@ namespace Astride.Core.Scenes.Endless
         }
         internal override void UI()
         {
+            //time alive
+            RayGui.GuiSetStyle((int)GuiControl.DEFAULT, (int)GuiDefaultProperty.TEXT_SIZE, 32);
+            RayGui.GuiLabel(new(1110, 20, 150, 90), $"Time Alive:\n\n {(int)_time}s");
+
+            //score:
+            RayGui.GuiLabel(new(1110, 110, 150, 90), $"Score:\n\n {_player.Score}");
+
+
             //place ui elements on screen if game is paused
             if (_isPaused)
             {
