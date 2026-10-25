@@ -92,7 +92,7 @@ namespace Astride.Core.Entites.EndlessMode
         {
             if (IsEnabled) //if enabled
             {
-                if (e is PlayerEndlessEntity)
+                if (e is PlayerEndlessEntity || e is BlackHoleEntity)
                 {
                     IsEnabled = false; //disable on collided with player
                 }

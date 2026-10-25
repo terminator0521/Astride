@@ -28,8 +28,10 @@ namespace Astride.Core.Entites.EndlessMode
             {
                 if (e is PlayerEndlessEntity || e is BlackHoleEntity) //disable if collided with blackhole or player
                 {
-                    IsEnabled = false;
+                    IsEnabled = false; //disable
+                    pos = new Vector2(-2000); //move offscreen
                 }
+
                 if (Raylib.CheckCollisionRecs(HitBox, _bounds) && !_canDestroy) //check if Astronaut is within active bounds
                 {
                     _canDestroy = true; //enable can destory
