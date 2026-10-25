@@ -11,8 +11,13 @@ namespace Astride.Core.Scenes.Endless
         Texture _background = Raylib.LoadTexture("Assets/Backgrounds/Debug.png");
 
         //background positions
-        Vector2 _bg1Pos;
-        Vector2 _bg2Pos;
+        Vector2[,] _bgPos =
+        {
+            {new Vector2(), new Vector2()}, //top row
+            {new Vector2(), new Vector2()}, //middle row
+            {new Vector2(), new Vector2()} //bottom row
+
+        };
 
         //scene priavte
         bool _isPaused; //pause menu active bool
@@ -26,7 +31,7 @@ namespace Astride.Core.Scenes.Endless
         private Vector2 _playerDis; //player velocity
         private Rectangle _camRect; //scene camera's rect
         private PlayerEndlessEntity _player = new PlayerEndlessEntity(); //create new player
-        
+
         /// <summary>
         /// Creates an endless freeplay scene
         /// </summary>
@@ -41,8 +46,16 @@ namespace Astride.Core.Scenes.Endless
             };
 
             //set background positions
-            _bg1Pos = -_cam.offset; 
-            _bg2Pos = _bg1Pos + new Vector2(_background.width, 0);
+            if (Raylib.IsTextureReady(_background)) //check if background is loaded
+            {
+                for (int i = -1; i < 2; i++)
+                {
+                    for (int j = 0; j < 2; j++)
+                    {
+                        _bgPos[i + 1, j] = -_cam.offset + new Vector2(_background.width * j, _background.height * i);
+                    }
+                }
+            }
 
             _entityList =
                 [
@@ -50,25 +63,25 @@ namespace Astride.Core.Scenes.Endless
                 _player,
 
                 //add astroids
-                new AstroidEntity(new Vector2(700, 100), _player.CenterPos),
-                new AstroidEntity(new Vector2(700, 200), _player.CenterPos),
-                new AstroidEntity(new Vector2(700, 300), _player.CenterPos),
-                new AstroidEntity(new Vector2(700, -100), _player.CenterPos),
-                new AstroidEntity(new Vector2(700, -200), _player.CenterPos),
-                new AstroidEntity(new Vector2(700, -300), _player.CenterPos),
-                new AstroidEntity(new Vector2(700, 0), _player.CenterPos),
+                //new AstroidEntity(new Vector2(700, 100), _player.CenterPos),
+                //new AstroidEntity(new Vector2(700, 200), _player.CenterPos),
+                //new AstroidEntity(new Vector2(700, 300), _player.CenterPos),
+                //new AstroidEntity(new Vector2(700, -100), _player.CenterPos),
+                //new AstroidEntity(new Vector2(700, -200), _player.CenterPos),
+                //new AstroidEntity(new Vector2(700, -300), _player.CenterPos),
+                //new AstroidEntity(new Vector2(700, 0), _player.CenterPos),
 
                 //add blackhole
                 new BlackHoleEntity(_size, _cam)
                 ];
-            
+
             //array of input handler
             _inputHandler =
                 [
                 //add player
                 _player
                 ];
-            
+
             //init camera rectangle
             _camRect = new Rectangle(0 - _cam.offset.X + 32, 0 - _cam.offset.Y + 32, _size.X, _size.Y + 2000);
         }
@@ -93,7 +106,7 @@ namespace Astride.Core.Scenes.Endless
                         _cam.target = player.CenterPos; //update scene camera target
                         _playerPos = player.CenterPos; //get player position
                         _playerDis = player.Displacement; //get player's velocity or displacement over time
-                        
+
                         //update player logic and pass in scene camera
                         player.Update(_cam);
 
@@ -128,18 +141,32 @@ namespace Astride.Core.Scenes.Endless
                 }
 
                 //move backgrounds based on player displacement
-                _bg1Pos -= _playerDis * Raylib.GetFrameTime();
-                _bg2Pos -= _playerDis * Raylib.GetFrameTime();
-
-
-                //reset background positions to ahead of background infront when offscreen
-                if (_bg1Pos.X < _cam.target.X - _cam.offset.X - _background.width)
+                if (Raylib.IsTextureReady(_background)) //check if background is loaded
                 {
-                    _bg1Pos.X = _bg2Pos.X + _background.width;
-                }
-                else if (_bg2Pos.X < _cam.target.X - _cam.offset.X - _background.width)
-                {
-                    _bg2Pos.X = _bg1Pos.X + _background.width;
+                    for (int i = 0; i < _bgPos.GetLength(0); i++)
+                    {
+                        for (int j = 0; j < _bgPos.GetLength(1); j++)
+                        {
+                            _bgPos[i, j] -= _playerDis * Raylib.GetFrameTime(); //update background positions based on player movement
+
+                            //reset background posiitons that are offscreen to the left
+                            if (_bgPos[i, j].X <= _cam.target.X - _cam.offset.X - _background.width)
+                            {
+                                _bgPos[i, j].X = _cam.target.X - _cam.offset.X + _background.width - 64f;
+                            }
+
+                            if (_bgPos[i, j].Y < _cam.target.Y - _cam.offset.Y - _background.height)
+                            {
+                                _bgPos[i, j].Y += _background.height * 2;
+                            }
+
+                            if (_bgPos[i, j].Y > _cam.target.Y - _cam.offset.Y + _background.height)
+                            {
+                                _bgPos[i, j].Y -= _background.height * 2;
+                            }
+
+                        }
+                    }
                 }
             }
         }
@@ -148,9 +175,13 @@ namespace Astride.Core.Scenes.Endless
             Raylib.BeginMode2D(_cam); //begin camera mode
 
             //draw backgrounds (WORK ON)
-            Raylib.DrawTextureV(_background, _bg1Pos, Raylib.WHITE);
-            Raylib.DrawTextureV(_background, _bg2Pos, Raylib.WHITE);
-
+            if (Raylib.IsTextureReady(_background)) //check if background is loaded
+            {
+                foreach (var b in _bgPos)
+                {
+                    Raylib.DrawTextureV(_background, b, Raylib.WHITE);
+                }
+            }
             //render each entity
             foreach (var e in _entityList)
             {

@@ -36,6 +36,7 @@ namespace Astride.Core.Entites.EndlessMode
         /// <param name="bounds">Active bounds</param>
         internal new void Update(in Vector2 playerPos, in Vector2 dis, in Rectangle bounds)
         {
+            Console.WriteLine(playerPos);
             if (IsEnabled) //if astroid is enabled
             {
                 if (Raylib.CheckCollisionRecs(dest, bounds) && !_canDestroy) //check if astroid is within active bounds
@@ -81,7 +82,7 @@ namespace Astride.Core.Entites.EndlessMode
         {
             if (IsEnabled) // if enabled
             {
-                base.Render(); //render calls
+                Raylib.DrawRectangleRec(dest, Raylib.SKYBLUE);
             }
         }
 
