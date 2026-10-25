@@ -80,7 +80,7 @@ namespace Astride.Core.Scenes.Endless
                 _player.proj,
 
                 //add blackhole
-                //new BlackHoleEntity(_size, _cam),
+                new BlackHoleEntity(_size, _cam),
 
                 ];
 

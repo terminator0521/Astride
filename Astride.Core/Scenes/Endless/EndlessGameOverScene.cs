@@ -47,8 +47,8 @@ namespace Astride.Core.Scenes.Endless
             RayGui.GuiLabel(new(490, 100, 300, 70), "Game Over");
 
             //draw final score and time
-            RayGui.GuiLabel(new(410, 200, 340, 70), $"Score: {_finalScore}");
-            RayGui.GuiLabel(new(410, 200, 340, 70), $"Time: {_time}s");
+            RayGui.GuiLabel(new(200, 250, 340, 70), $"Score: {_finalScore}");
+            RayGui.GuiLabel(new(800, 250, 340, 70), $"Time: {_time}s");
 
             //draw retry and quit buttons
             RayGui.GuiSetStyle((int)GuiControl.DEFAULT, (int)GuiDefaultProperty.TEXT_SIZE, 40);
