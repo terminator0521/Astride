@@ -18,7 +18,7 @@ This game is made using Vinculum's C# port of Raylib and Raygui by Raysan5 meant
 
 
 
-This is a shooter that requires you to shoot in order to move around, with the goal of saving lost astronauts and fight bosses.
+This is a shooter that requires you to shoot in order to move around, with the goal of saving lost astronauts and fight bosses. But the catch is, you are in a spaceship that can only shoot one bullet at a time to both move and survive; and with only one hit from the astroids or blackhole to game over. Shoot astroids, pick up astronauts, and run from the blackhole behind you to survive!
 
 
 
