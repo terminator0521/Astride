@@ -8,22 +8,34 @@ namespace Astride.Core.Entites.EndlessMode
     internal class AstroidEntity : Entity
     {
         internal bool IsEnabled { get; private set; } = false; //if astroid is enabled
-        private Vector2 _startPos; //start position 
+        private Vector2 _offset; //start position offset from player
+        private Vector2 _disAdj; //displacement adjustment;
         private bool _canDestroy = false; //can be destroyed
-        private Vector2 _target; //astroid target spot
-        readonly private static float[] s_respawnTime = { 1f, 2f, 3f }; //respawn times
-        readonly private static float[] s_speeds = { 100f, 200f, 150f }; //travelling speeds
+        readonly private static float[] s_respawnTime = {2f}; //respawn times
+        readonly private static float[] s_speeds = { 200f, 175f, 150f}; //travelling speeds
+
+        //random adjustments to astroid displacement
+        readonly private static Vector2[] s_disAdjustments =
+        {
+            new Vector2(-1f, 0f),
+            new Vector2(-1f, -0.1f),
+            new Vector2(-1f, 0.1f),
+            new Vector2(-1f, -0.2f),
+            new Vector2(-1f, 0.2f),
+            new Vector2(-1f, -0.3f),
+            new Vector2(-1f, 0.3f),
+        }; 
+
         private float _currentWaitTime = 0; //wait timer
 
         /// <summary>
         /// Creates an astroid
         /// </summary>
-        /// <param name="startPos">Start position offset based on playerPos</param>
+        /// <param name="offset">Start position offset based on playerPos</param>
         /// <param name="playerPos">Position of player</param>
-        internal AstroidEntity(in Vector2 startPos, in Vector2 playerPos) : base(24, 24, startPos + playerPos)
+        internal AstroidEntity(in Vector2 offset, in Vector2 playerPos) : base(24, 24, offset + playerPos)
         {
-            _startPos = startPos; //set start pos
-            pos = _startPos; //set current pos
+            _offset = offset; //set start pos offset
             _currentWaitTime = RandomIndex(s_respawnTime); //set random respawn time
             speed = RandomIndex(in s_speeds); //set random speed
         }
@@ -32,29 +44,19 @@ namespace Astride.Core.Entites.EndlessMode
         /// Run astroid logic updates
         /// </summary>
         /// <param name="playerPos">Player position</param>
-        /// <param name="dis">Player displacement</param>
         /// <param name="bounds">Active bounds</param>
-        internal new void Update(in Vector2 playerPos, in Vector2 dis, in Rectangle bounds)
+        internal new void Update(in Vector2 playerPos, in Vector2 playerDis, in Rectangle bounds)
         {
-            Console.WriteLine(playerPos);
             if (IsEnabled) //if astroid is enabled
             {
-                if (Raylib.CheckCollisionRecs(dest, bounds) && !_canDestroy) //check if astroid is within active bounds
+                if (Raylib.CheckCollisionRecs(HitBox, bounds) && !_canDestroy) //check if astroid is within active bounds
                 {
                     _canDestroy = true; //enable can destory
                 }
-                else if (!Raylib.CheckCollisionRecs(dest, bounds) && _canDestroy) //check if astroid is out of bounds and can be destroyed
+                else if (!Raylib.CheckCollisionRecs(HitBox, bounds) && _canDestroy) //check if astroid is out of bounds and can be destroyed
                 {
                     IsEnabled = false; //disable astroid
                 }
-
-                _target -= dis * Raylib.GetFrameTime(); //target of for direction
-
-                displacement = RayMath.Vector2Normalize((_target / Raylib.GetFrameTime()) - displacement) * speed * Raylib.GetFrameTime(); // update displacement based on target
-                displacement -= dis * Raylib.GetFrameTime(); //adjust displacement by player speed
-
-
-                base.Update(1f); //run parent updates
             }
             else //if astroid is disabled
             {
@@ -64,18 +66,22 @@ namespace Astride.Core.Entites.EndlessMode
                 }
                 else
                 {
-                    pos = playerPos + _startPos; //return to start pos
-                    pos.Y -= (dis.Y * Raylib.GetFrameTime()); //adjust starting y pos based on player velocity
-                    //(work on adjusting based on player vel)
-                    displacement = playerPos - _startPos; //head towards players last pos 
-                    _target = (playerPos - pos); //set target
-                    _currentWaitTime = RandomIndex(s_respawnTime); //randomize respawn time
+                    pos = playerPos + _offset;
+                    _currentWaitTime = RandomIndex(in s_respawnTime); //randomize respawn time
                     speed = RandomIndex(in s_speeds); //choose speed
                     IsEnabled = true; //enable
                     _canDestroy = false; //disable can destroy
+
+                    displacement = -RayMath.Vector2Normalize(_offset); //get direction to player 
+                    displacement += RayMath.Vector2Normalize(RandomIndex(s_disAdjustments)); //adjust with random direction
+                    Console.WriteLine(displacement);
+                    displacement *= speed; //change displacement by factor of speed
+                    Console.WriteLine(displacement);
+
                 }
             }
 
+            base.Update(Raylib.GetFrameTime()); //update parent logic
         }
 
         internal override void Render()
@@ -105,7 +111,7 @@ namespace Astride.Core.Entites.EndlessMode
         /// <returns></returns>
         private A RandomIndex<A>(in A[] array)
         {
-            return array[RandomNumberGenerator.GetInt32(array.Length)]; //return random index in given array
+            return array[Random.Shared.Next(array.Length)]; //return random index in given array
         }
     }
 }

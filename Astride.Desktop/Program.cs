@@ -4,7 +4,7 @@ using ZeroElectric.Vinculum;
 
 Raylib.InitWindow(1280, 720, "Astride"); //create game window
 var game = new Game(1100, 720); //create game
-Raylib.SetTargetFPS(Raylib.GetMonitorRefreshRate(Raylib.GetCurrentMonitor())); //set fps based on monitor refresh rate
+Raylib.SetTargetFPS(60); //set fps based on monitor refresh rate
 
 //while window is still running
 while (!Raylib.WindowShouldClose())

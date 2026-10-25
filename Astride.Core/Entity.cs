@@ -96,6 +96,7 @@ namespace Astride.Core
             origin = new Vector2(width / 2, height / 2);
             displacement = Vector2.Zero;
             HitBox = new Rectangle(dest.X - origin.X, dest.Y - origin.Y, width, height);
+            this.pos = pos;
         }
 
         /// <summary>

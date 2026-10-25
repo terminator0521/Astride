@@ -68,7 +68,7 @@ namespace Astride.Core.Entites.EndlessMode
         {
             if (e is AstroidEntity) //remove health by one if collided with astroid
             {
-                Health--;
+                //Health--;
             }
             else if (e is BlackHoleEntity) //instant dealth when collided with blackhole
             {

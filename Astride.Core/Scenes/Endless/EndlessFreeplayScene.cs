@@ -63,16 +63,16 @@ namespace Astride.Core.Scenes.Endless
                 _player,
 
                 //add astroids
-                //new AstroidEntity(new Vector2(700, 100), _player.CenterPos),
-                //new AstroidEntity(new Vector2(700, 200), _player.CenterPos),
-                //new AstroidEntity(new Vector2(700, 300), _player.CenterPos),
-                //new AstroidEntity(new Vector2(700, -100), _player.CenterPos),
-                //new AstroidEntity(new Vector2(700, -200), _player.CenterPos),
-                //new AstroidEntity(new Vector2(700, -300), _player.CenterPos),
-                //new AstroidEntity(new Vector2(700, 0), _player.CenterPos),
+                new AstroidEntity(new Vector2(700, 100), _player.CenterPos),
+                new AstroidEntity(new Vector2(700, 200), _player.CenterPos),
+                new AstroidEntity(new Vector2(700, 300), _player.CenterPos),
+                new AstroidEntity(new Vector2(700, -100), _player.CenterPos),
+                new AstroidEntity(new Vector2(700, -200), _player.CenterPos),
+                new AstroidEntity(new Vector2(700, -300), _player.CenterPos),
+                new AstroidEntity(new Vector2(700, 0), _player.CenterPos),
 
                 //add blackhole
-                new BlackHoleEntity(_size, _cam)
+                //new BlackHoleEntity(_size, _cam)
                 ];
 
             //array of input handler
