@@ -14,7 +14,6 @@ namespace Astride.Core.Scenes.Endless
         {
             _finalScore = score; //set final score
             _time = time; //set final time
-
         }
 
         internal override void Update()

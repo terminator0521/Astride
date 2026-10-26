@@ -217,9 +217,11 @@ namespace Astride.Core.Scenes.Endless
             RayGui.GuiSetStyle((int)GuiControl.DEFAULT, (int)GuiDefaultProperty.TEXT_SIZE, 32);
             RayGui.GuiLabel(new(1110, 20, 150, 90), $"Time Alive:\n\n {(int)_time}s");
 
-            //score:
+            //score
             RayGui.GuiLabel(new(1110, 110, 150, 90), $"Score:\n\n {_player.Score}");
 
+            //health
+            RayGui.GuiLabel(new(1110, 200, 150, 90), $"Lives:\n\n {_player.Health}");
 
             //place ui elements on screen if game is paused
             if (_isPaused)

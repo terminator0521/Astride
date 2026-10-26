@@ -1,5 +1,4 @@
 ﻿using Astride.Input;
-using System.Data.Common;
 using System.Numerics;
 using ZeroElectric.Vinculum;
 
@@ -37,7 +36,7 @@ namespace Astride.Core.Entites.EndlessMode
         internal PlayerEndlessEntity() : base(64, 64, new(0, 0))
         {
             speed = 250f; //set player max speed
-            Health = 1; //set player health
+            Health = 3; //set player health
             UpdateTexture("Assets/Textures/Player.png"); //init player texture and texture parsing rect
             proj = new ProjectileEntity(24f); //init projectile
 
