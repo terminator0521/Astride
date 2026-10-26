@@ -134,7 +134,8 @@ namespace Astride.Core.Scenes.Endless
                     {
                         //update astroids
                         astroid.Update(in _playerPos, in _playerDis, in _camRect);
-                    } else if (e is AstronautEntity astronaut)
+                    }
+                    else if (e is AstronautEntity astronaut)
                     {
                         astronaut.Update(_playerPos, _camRect);
                     }
@@ -246,6 +247,9 @@ namespace Astride.Core.Scenes.Endless
         {
             switch (NextScene)
             {
+                case -1:
+                    Dispose(); //dispose unmanaged resources
+                    return new MainMenuScene(); //go back to game menu
                 case 1:
                     Dispose(); //dispose unmanaged resources
                     return new EndlessGameOverScene(_player.Score, (int)_time); //go to game over screen
