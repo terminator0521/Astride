@@ -38,6 +38,10 @@ namespace Astride.Core
         /// <param name="inputManagers">update input handelers in scene.</param> 
         virtual internal void InputUpdate(IInputHandler[] inputManagers)
         {
+            //exit method if there is no array
+            if (inputManagers is null)
+                return;
+
             foreach (var inputManager in inputManagers)
             {
                 inputManager.InputUpdate(); //update 
