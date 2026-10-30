@@ -1,9 +1,30 @@
-﻿using ZeroElectric.Vinculum;
+﻿using Astride.Core.Entites.Defense;
+using Astride.Input;
+using ZeroElectric.Vinculum;
 
 namespace Astride.Core.Scenes.Defense
 {
     internal class DefenseScene : Scene
     {
+        private PlayerDefenseEntity _player;
+        private IInputHandler[] _inputHandlers;
+        private Entity[] _entities;
+
+        internal DefenseScene() : base()
+        {
+            _player = new PlayerDefenseEntity(new(10, 10));
+
+            _inputHandlers = 
+                [
+                _player
+                ];
+
+            _entities =
+                [
+                _player
+                ];
+        }
+
         internal override void Render()
         {
 

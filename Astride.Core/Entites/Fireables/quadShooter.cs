@@ -15,17 +15,24 @@ namespace Astride.Core.Entites.Fireables
 
         internal override void Update(float delta, Rectangle bounds, Vector2 aimDirection, Vector2 position)
         {
-
             base.Update(delta, bounds, aimDirection, position);
         }
 
-        public void InputUpdate()
+        public override void InputUpdate()
         {
-            foreach(var p in projectiles)
+            if (Raylib.IsMouseButtonPressed(MouseButton.MOUSE_BUTTON_LEFT))
+            {
+                Shoot(aimDirection, pos);
+            }
+        }
+
+        internal override void Shoot(Vector2 aimDirection, Vector2 position)
+        {
+            foreach (var p in projectiles)
             {
                 if (!p.IsEnabled)
                 {
-                    p.Shoot();
+                    p.Shoot(aimDirection, pos);
                 }
             }
         }

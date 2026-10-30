@@ -8,7 +8,7 @@ namespace Astride.Core.Entites.Fireables
     /// <summary>
     /// This class inherits "Entity" but not "IInputHandler"
     /// </summary>
-    internal class Shooter : Entity
+    internal class Shooter : Entity, IInputHandler
     {
         protected Vector2 aimDirection;
         protected ProjectileEntity[] projectiles;
@@ -24,15 +24,21 @@ namespace Astride.Core.Entites.Fireables
 
         internal virtual void Update(float delta, Rectangle bounds, Vector2 aimDirection, Vector2 position)
         {
-            //update internal fields
-            this.aimDirection = aimDirection;
-            pos = position;
-
-            base.Update(delta);
+            
         }
         internal override void OnCollision(Entity e)
         {
             
+        }
+
+        internal virtual void Shoot(Vector2 aimDirection, Vector2 position)
+        {
+
+        }
+
+        public virtual void InputUpdate()
+        {
+            Console.WriteLine("not working");
         }
     }
 }
