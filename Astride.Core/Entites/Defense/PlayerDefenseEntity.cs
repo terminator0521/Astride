@@ -1,10 +1,6 @@
 ﻿using Astride.Core.Entites.Fireables;
 using Astride.Input;
-using System;
-using System.Collections.Generic;
 using System.Numerics;
-using System.Runtime.InteropServices;
-using System.Text;
 using ZeroElectric.Vinculum;
 
 namespace Astride.Core.Entites.Defense
@@ -17,7 +13,7 @@ namespace Astride.Core.Entites.Defense
         private float _boosterVelIncrease = 25f;
         private float[] _weaponVelIncrease = [75f, 100f, 150f];
         private Shooter gun = new QuadShooter(48, 4);
-        
+
         /// <summary>
         /// 0 for 
         /// </summary>
@@ -34,7 +30,7 @@ namespace Astride.Core.Entites.Defense
         }
         public void InputUpdate()
         {
-
+            //displacement = RayMath.Vector2Normalize()
         }
 
         internal override void OnCollision(Entity e)

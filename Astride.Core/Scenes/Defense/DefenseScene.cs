@@ -1,5 +1,6 @@
 ﻿using Astride.Core.Entites.Defense;
 using Astride.Input;
+using System.Numerics;
 using ZeroElectric.Vinculum;
 
 namespace Astride.Core.Scenes.Defense
@@ -9,12 +10,15 @@ namespace Astride.Core.Scenes.Defense
         private PlayerDefenseEntity _player;
         private IInputHandler[] _inputHandlers;
         private Entity[] _entities;
+        private Vector2 _playerPosition = new Vector2(0);
+        private Camera2D _camera = new Camera2D();
+        private Vector2 _size = new Vector2(1100, 720); //size of render area
 
         internal DefenseScene() : base()
         {
-            _player = new PlayerDefenseEntity(new(10, 10));
+            _player = new PlayerDefenseEntity(new(100, 100));
 
-            _inputHandlers = 
+            _inputHandlers =
                 [
                 _player
                 ];
@@ -23,11 +27,27 @@ namespace Astride.Core.Scenes.Defense
                 [
                 _player
                 ];
+
+            _camera.offset = _size / 2;
+            _camera.zoom = 1.5f;
+            _camera.rotation = 0f;
+        }
+
+        internal override void InputUpdate(IInputHandler[] inputManagers)
+        {
+            base.InputUpdate(inputManagers);
         }
 
         internal override void Render()
         {
+            Raylib.BeginMode2D(_camera);
 
+            foreach (var entity in _entities)
+            {
+                entity.Render();
+            }
+
+            Raylib.EndMode2D();
         }
 
         internal override Scene SetNextScene()
@@ -46,7 +66,17 @@ namespace Astride.Core.Scenes.Defense
 
         internal override void Update()
         {
+            InputUpdate(_inputHandlers);
+            _camera.target = _playerPosition;
 
+            foreach (var entity in _entities)
+            {
+                if (entity is PlayerDefenseEntity player)
+                {
+                    player.Update(Raylib.GetFrameTime());
+                    _playerPosition = player.pos;
+                }
+            }
         }
     }
 }
