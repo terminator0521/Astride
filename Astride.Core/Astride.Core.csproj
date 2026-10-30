@@ -9,11 +9,15 @@
 
 	<ItemGroup>
 	  <None Remove="Assets\Backgrounds\Debug.png" />
+	  <None Remove="Assets\Textures\Astronaut.png" />
 	  <None Remove="Assets\Textures\Player.png" />
 	</ItemGroup>
 
 	<ItemGroup>
 	  <Content Include="Assets\Backgrounds\Debug.png">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </Content>
+	  <Content Include="Assets\Textures\Astronaut.png">
 	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 	  </Content>
 	  <Content Include="Assets\Textures\Player.png">
