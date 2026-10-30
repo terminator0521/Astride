@@ -134,7 +134,8 @@ namespace Astride.Core.Scenes.Endless
                     {
                         //update astroids
                         astroid.Update(in _playerPos, in _playerDis, in _camRect);
-                    } else if (e is AstronautEntity astronaut)
+                    }
+                    else if (e is AstronautEntity astronaut)
                     {
                         astronaut.Update(_playerPos, _camRect);
                     }
@@ -216,9 +217,11 @@ namespace Astride.Core.Scenes.Endless
             RayGui.GuiSetStyle((int)GuiControl.DEFAULT, (int)GuiDefaultProperty.TEXT_SIZE, 32);
             RayGui.GuiLabel(new(1110, 20, 150, 90), $"Time Alive:\n\n {(int)_time}s");
 
-            //score:
+            //score
             RayGui.GuiLabel(new(1110, 110, 150, 90), $"Score:\n\n {_player.Score}");
 
+            //health
+            RayGui.GuiLabel(new(1110, 200, 150, 90), $"Lives:\n\n {_player.Health}");
 
             //place ui elements on screen if game is paused
             if (_isPaused)
@@ -246,6 +249,9 @@ namespace Astride.Core.Scenes.Endless
         {
             switch (NextScene)
             {
+                case -1:
+                    Dispose(); //dispose unmanaged resources
+                    return new MainMenuScene(); //go back to game menu
                 case 1:
                     Dispose(); //dispose unmanaged resources
                     return new EndlessGameOverScene(_player.Score, (int)_time); //go to game over screen
