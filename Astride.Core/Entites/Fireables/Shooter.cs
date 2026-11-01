@@ -12,7 +12,7 @@ namespace Astride.Core.Entites.Fireables
     {
         protected Vector2 aimDirection;
         protected ProjectileEntity[] projectiles;
-        public Shooter(int size, int projectileCount) : base(size, size)
+        internal Shooter(int size, int projectileCount) : base(size, size)
         {
             //construct projectiles
             projectiles = new ProjectileEntity[projectileCount];
@@ -39,6 +39,11 @@ namespace Astride.Core.Entites.Fireables
         public virtual void InputUpdate()
         {
             Console.WriteLine("not working");
+        }
+
+        internal ProjectileEntity[] GetProjectiles()
+        {
+            return projectiles;
         }
     }
 }

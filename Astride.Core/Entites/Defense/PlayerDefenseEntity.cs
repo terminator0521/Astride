@@ -16,7 +16,7 @@ namespace Astride.Core.Entites.Defense
 
         private float _boosterVelIncrease = 10f;
         private float[] _weaponVelIncrease = [75f, 100f, 150f];
-        private Shooter[] _gun = { new QuadShooter(24, 5) };
+        internal Shooter[] _gun = { new QuadShooter(24, 5) };
 
         private int _selectedGun = 0;
 
@@ -66,6 +66,18 @@ namespace Astride.Core.Entites.Defense
         internal override void OnCollision(Entity e)
         {
 
+        }
+
+        internal override void Render()
+        {
+            _gun[_selectedGun].Render();
+
+            base.Render();
+        }
+
+        internal ProjectileEntity[] GetProjectile()
+        {
+            return _gun[_selectedGun].GetProjectiles();
         }
     }
 }

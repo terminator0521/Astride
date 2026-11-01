@@ -9,7 +9,7 @@ namespace Astride.Core.Scenes.Defense
     {
         private PlayerDefenseEntity _player;
         private IInputHandler[] _inputHandlers;
-        private Entity[] _entities;
+        private List<Entity> _entities = new List<Entity>();
         private Vector2 _playerPosition = new Vector2(0);
         private Camera2D _camera = new Camera2D();
         private Vector2 _size = new Vector2(1100, 720); //size of render area
@@ -21,17 +21,26 @@ namespace Astride.Core.Scenes.Defense
 
             _inputHandlers =
                 [
-                _player
+                _player,
                 ];
 
             _entities =
                 [
-                _player
+                _player,
                 ];
 
             _camera.offset = _size / 2;
             _camera.zoom = 1f;
             _camera.rotation = 0f;
+
+            //add projectiles
+            for (int i = 0; i < 3; i++)
+            {
+                foreach (var projectile in _player._gun[0].GetProjectiles())
+                {
+                    _entities.Add(projectile);
+                }
+            }
         }
 
         internal override void InputUpdate(IInputHandler[] inputManagers)

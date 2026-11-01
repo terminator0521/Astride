@@ -11,6 +11,12 @@ namespace Astride.Core.Entites.Fireables
     {
         public QuadShooter(int size, int projectileCount) : base(size, projectileCount)
         {
+            projectiles = new ProjectileEntity[projectileCount];
+
+            for (int i = 0; i < projectileCount; i++)
+            {
+                projectiles[i] = new ProjectileEntity(size);
+            }
         }
 
         internal override void Update(float delta, Rectangle bounds, Vector2 aimDirection, Vector2 position)
@@ -34,6 +40,14 @@ namespace Astride.Core.Entites.Fireables
                 {
                     p.Shoot(aimDirection, pos);
                 }
+            }
+        }
+
+        internal override void Render()
+        {
+            foreach (var p in projectiles)
+            {
+                p.Render();
             }
         }
     }
