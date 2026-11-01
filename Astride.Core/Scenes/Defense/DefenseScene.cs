@@ -1,4 +1,5 @@
 ﻿using Astride.Core.Entites.Defense;
+using Astride.Core.Entites.Fireables;
 using Astride.Input;
 using System.Numerics;
 using ZeroElectric.Vinculum;
@@ -11,9 +12,10 @@ namespace Astride.Core.Scenes.Defense
         private IInputHandler[] _inputHandlers;
         private List<Entity> _entities = new List<Entity>();
         private Vector2 _playerPosition = new Vector2(0);
-        private Camera2D _camera = new Camera2D();
+        private Camera2D _cam = new Camera2D();
         private Vector2 _size = new Vector2(1100, 720); //size of render area
         private Texture _background = Raylib.LoadTexture("Assets/Backgrounds/debug.png");
+        private Rectangle _camRect;
 
         internal DefenseScene() : base()
         {
@@ -29,18 +31,19 @@ namespace Astride.Core.Scenes.Defense
                 _player,
                 ];
 
-            _camera.offset = _size / 2;
-            _camera.zoom = 1f;
-            _camera.rotation = 0f;
+            _cam.offset = _size / 2;
+            _cam.zoom = 1f;
+            _cam.rotation = 0f;
+
+            _camRect = new Rectangle(0 - _cam.offset.X + 32, 0 - _cam.offset.Y + 32, _size.X, _size.Y);
 
             //add projectiles
-            for (int i = 0; i < 3; i++)
+            foreach (var projectile in _player._gun[0].GetProjectiles())
             {
-                foreach (var projectile in _player._gun[0].GetProjectiles())
-                {
-                    _entities.Add(projectile);
-                }
+                _entities.Add(projectile);
             }
+
+            Console.WriteLine(_entities.Count);
         }
 
         internal override void InputUpdate(IInputHandler[] inputManagers)
@@ -50,8 +53,8 @@ namespace Astride.Core.Scenes.Defense
 
         internal override void Render()
         {
-            Raylib.BeginMode2D(_camera);
-            
+            Raylib.BeginMode2D(_cam);
+
             Raylib.DrawTexturePro(_background, new Rectangle(0, 0, _background.width, _background.height), new Rectangle(0, 0, 2000, 2000), new(0f, 0f), 0f, Raylib.WHITE);
 
             foreach (var entity in _entities)
@@ -79,14 +82,18 @@ namespace Astride.Core.Scenes.Defense
         internal override void Update()
         {
             InputUpdate(_inputHandlers);
-            _camera.target = _playerPosition;
+            _cam.target = _playerPosition;
 
             foreach (var entity in _entities)
             {
                 if (entity is PlayerDefenseEntity player)
                 {
-                    player.Update(Raylib.GetFrameTime(), _camera);
+                    player.Update(Raylib.GetFrameTime(), _cam);
                     _playerPosition = player.pos;
+                }
+                else if (entity is ProjectileEntity p)
+                {
+                    p.Update(Raylib.GetFrameTime(), _camRect);
                 }
             }
         }

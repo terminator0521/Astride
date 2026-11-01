@@ -15,9 +15,8 @@ namespace Astride.Core.Entites.EndlessMode
         /// <summary>
         /// create an astronaut entity
         /// </summary>
-        public AstronautEntity(in Vector2 startPosOffset, in Vector2 playerPos) : base(64, 64, playerPos + startPosOffset) 
+        public AstronautEntity(in Vector2 startPosOffset, in Vector2 playerPos) : base(64, 64, playerPos + startPosOffset)
         {
-            Console.WriteLine(startPosOffset);
             _startPosOffset = startPosOffset;
             UpdateTexture("Assets/Textures/Astronaut.png");
         }
@@ -73,7 +72,7 @@ namespace Astride.Core.Entites.EndlessMode
         internal override void Render()
         {
             //render if enabled
-            if(IsEnabled)
+            if (IsEnabled)
                 base.Render();
         }
     }

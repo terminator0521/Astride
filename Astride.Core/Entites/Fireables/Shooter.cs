@@ -24,16 +24,25 @@ namespace Astride.Core.Entites.Fireables
 
         internal virtual void Update(float delta, Rectangle bounds, Vector2 aimDirection, Vector2 position)
         {
-            
+            foreach (var projectile in projectiles)
+            {
+                projectile.Update(delta, bounds);
+            }
         }
         internal override void OnCollision(Entity e)
         {
-            
+
         }
 
         internal virtual void Shoot(Vector2 aimDirection, Vector2 position)
         {
-
+            foreach (var p in projectiles)
+            {
+                if (!p.IsEnabled)
+                {
+                    p.Shoot(aimDirection, position);
+                }
+            }
         }
 
         public virtual void InputUpdate()

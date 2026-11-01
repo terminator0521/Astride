@@ -1,8 +1,6 @@
 ﻿using Astride.Core.Entites.Fireables;
 using Astride.Input;
 using System.Numerics;
-using System.Reflection;
-using System.Runtime.CompilerServices;
 using ZeroElectric.Vinculum;
 
 namespace Astride.Core.Entites.Defense
@@ -20,11 +18,6 @@ namespace Astride.Core.Entites.Defense
 
         private int _selectedGun = 0;
 
-        /// <summary>
-        /// 0 for 
-        /// </summary>
-        private int _selectedFireMode = 0;
-
         internal PlayerDefenseEntity(Vector2 startPos) : base(40, 40, startPos)
         {
             speed = 10f;
@@ -40,7 +33,6 @@ namespace Astride.Core.Entites.Defense
             {
                 displacement = RayMath.Vector2Normalize(displacement) * 600f;
             }
-            Console.WriteLine(displacement.Length());
 
             base.Update(delta);
         }
@@ -48,8 +40,6 @@ namespace Astride.Core.Entites.Defense
         {
 
             Vector2 mouseDelta = Raylib.GetScreenToWorld2D(Raylib.GetMousePosition(), _cam) - pos;
-
-            _gun[0].InputUpdate();
 
             if (Raylib.IsMouseButtonDown(MouseButton.MOUSE_BUTTON_RIGHT)) //boosters
             {

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Numerics;
-using System.Reflection;
-using System.Text;
+﻿using System.Numerics;
 using ZeroElectric.Vinculum;
 
 namespace Astride.Core.Entites.Fireables
@@ -28,7 +23,7 @@ namespace Astride.Core.Entites.Fireables
         {
             if (IsEnabled)
             {
-                
+
             }
         }
 
@@ -48,6 +43,7 @@ namespace Astride.Core.Entites.Fireables
 
         internal void Shoot(Vector2 direction, Vector2 startPos)
         {
+            Console.WriteLine(startPos);
             direction = RayMath.Vector2Normalize(direction); //normalize direction vector
             pos = startPos; //set start position
             displacement = direction * speed; //set velocity
