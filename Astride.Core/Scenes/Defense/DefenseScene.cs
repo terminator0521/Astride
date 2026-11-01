@@ -13,6 +13,7 @@ namespace Astride.Core.Scenes.Defense
         private Vector2 _playerPosition = new Vector2(0);
         private Camera2D _camera = new Camera2D();
         private Vector2 _size = new Vector2(1100, 720); //size of render area
+        private Texture _background = Raylib.LoadTexture("Assets/Backgrounds/debug.png");
 
         internal DefenseScene() : base()
         {
@@ -29,7 +30,7 @@ namespace Astride.Core.Scenes.Defense
                 ];
 
             _camera.offset = _size / 2;
-            _camera.zoom = 1.5f;
+            _camera.zoom = 1f;
             _camera.rotation = 0f;
         }
 
@@ -41,6 +42,8 @@ namespace Astride.Core.Scenes.Defense
         internal override void Render()
         {
             Raylib.BeginMode2D(_camera);
+            
+            Raylib.DrawTexturePro(_background, new Rectangle(0, 0, _background.width, _background.height), new Rectangle(0, 0, 2000, 2000), new(0f, 0f), 0f, Raylib.WHITE);
 
             foreach (var entity in _entities)
             {
@@ -73,7 +76,7 @@ namespace Astride.Core.Scenes.Defense
             {
                 if (entity is PlayerDefenseEntity player)
                 {
-                    player.Update(Raylib.GetFrameTime());
+                    player.Update(Raylib.GetFrameTime(), _camera);
                     _playerPosition = player.pos;
                 }
             }
